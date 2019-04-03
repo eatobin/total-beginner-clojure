@@ -1,14 +1,18 @@
 (ns total.borrower
-  (:require 
-            [clojure.spec.alpha :as s]
-            [orchestra.spec.test :as ostest]))
+  (:require
+    [clojure.spec.alpha :as s]
+    [orchestra.spec.test :as ostest]))
 
-; (defn make-borrower [name max-books]
-;   {:name name, :max-books max-books})
-; (s/fdef make-borrower
-;         :args (s/cat :name ::dom/name
-;                      :max-books ::dom/max-books)
-;         :ret :unq/borrower)
+(s/def ::name string?)
+(s/def ::max-books (s/and int? #(>= % 0)))
+(s/def ::borrower (s/keys :req [::name ::max-books]))
+
+(defn make-borrower [name max-books]
+  {::name name, ::max-books max-books})
+(s/fdef make-borrower
+        :args (s/cat :name ::name
+                     :max-books ::max-books)
+        :ret ::borrower)
 
 ; (defn get-name [borrower]
 ;   (borrower :name))
@@ -42,4 +46,4 @@
 ;         :args (s/cat :borrower :unq/borrower)
 ;         :ret string?)
 
-; (ostest/instrument)
+(ostest/instrument)
