@@ -35,13 +35,13 @@
 ;        :args (s/cat :book :unq/book)
 ;        :ret ::dom/borrower)
 ;
-;(defn set-borrower [book borrower]
-;  (assoc book :borrower borrower))
-;(s/fdef set-borrower
-;        :args (s/cat :book :unq/book
-;                     :borrower ::dom/borrower)
-;        :ret :unq/book)
-;
+(defn set-borrower [book borrower]
+  (assoc book ::borrower borrower))
+(s/fdef set-borrower
+        :args (s/cat :book ::book
+                     :borrower ::br/borrower)
+        :ret ::book)
+
 ;(defn- available-string [book]
 ;  (let [borrower (get-borrower book)]
 ;    (if (nil? borrower)
