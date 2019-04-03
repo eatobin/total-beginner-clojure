@@ -13,12 +13,12 @@
 (s/conform ::bk/book
            (bk/make-book "Title1" "Author1" br2))
 
-;(deftest get-title-test
-;  (is (= "Title1"
-;         (bk/get-title bk1))))
-;(s/conform ::dom/title
-;           (bk/get-title bk1))
-;
+(deftest get-title-test
+  (is (= "Title1"
+         (bk/get-title bk1))))
+(s/conform ::bk/title
+           (bk/get-title bk1))
+
 ;(deftest get-author-test
 ;  (is (= "Author1"
 ;         (bk/get-author bk1))))

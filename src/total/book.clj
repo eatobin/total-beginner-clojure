@@ -17,12 +17,12 @@
                      :borrower (s/? ::maybe-borrower))
         :ret ::book)
 
-;(defn get-title [book]
-;  (book :title))
-;(s/fdef get-title
-;        :args (s/cat :book :unq/book)
-;        :ret ::dom/title)
-;
+(defn get-title [book]
+  (book ::title))
+(s/fdef get-title
+        :args (s/cat :book ::book)
+        :ret ::title)
+
 ;(defn get-author [book]
 ;  (book :author))
 ;(s/fdef get-author
