@@ -42,26 +42,26 @@
                      :borrower ::br/borrower)
         :ret ::book)
 
-;(defn- available-string [book]
-;  (let [borrower (get-borrower book)]
-;    (if (nil? borrower)
-;      "Available"
-;      (str
-;        "Checked out to "
-;        (br/get-name borrower)))))
-;(s/fdef available-string
-;        :args (s/cat :book :unq/book)
-;        :ret string?)
-;
-;(defn book-to-string [book]
-;  (str
-;    (get-title book)
-;    " by "
-;    (get-author book)
-;    "; "
-;    (available-string book)))
-;(s/fdef book-to-string
-;        :args (s/cat :book :unq/book)
-;        :ret string?)
+(defn- available-string [book]
+  (let [borrower (get-borrower book)]
+    (if (nil? borrower)
+      "Available"
+      (str
+        "Checked out to "
+        (br/get-name borrower)))))
+(s/fdef available-string
+        :args (s/cat :book ::book)
+        :ret string?)
+
+(defn book-to-string [book]
+  (str
+    (get-title book)
+    " by "
+    (get-author book)
+    "; "
+    (available-string book)))
+(s/fdef book-to-string
+        :args (s/cat :book ::book)
+        :ret string?)
 
 (ostest/instrument)

@@ -36,14 +36,14 @@
 (s/conform ::bk/maybe-borrower
            (bk/get-borrower bk2))
 
-;(deftest book-to-string-nil-test
-;  (is (= "Title1 by Author1; Available"
-;         (bk/book-to-string bk1))))
-;(s/conform string?
-;           (bk/book-to-string bk1))
-;
-;(deftest book-to-string-someone-test
-;  (is (= "Title1 by Author1; Checked out to Borrower2"
-;         (bk/book-to-string bk2))))
-;(s/conform string?
-;           (bk/book-to-string bk2))
+(deftest book-to-string-nil-test
+  (is (= "Title1 by Author1; Available"
+         (bk/book-to-string bk1))))
+(s/conform string?
+           (bk/book-to-string bk1))
+
+(deftest book-to-string-someone-test
+  (is (= "Title1 by Author1; Checked out to Borrower2"
+         (bk/book-to-string bk2))))
+(s/conform string?
+           (bk/book-to-string bk2))
