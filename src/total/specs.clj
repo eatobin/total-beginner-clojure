@@ -53,19 +53,19 @@
 (stest/check `br/set-name)
 
 (s/explain ::bk/book
-           {::bk/title    "T"
-            ::bk/author   "a"
-            ::bk/borrower {::br/name      "Nn",
-                           ::br/max-books 333}})
+           {::bk/title          "T"
+            ::bk/author         "a"
+            ::bk/maybe-borrower {::br/name      "Nn",
+                                 ::br/max-books 333}})
 (s/exercise-fn `bk/make-book)
 (stest/check `bk/make-book)
-(s/conform ::bk/book {::bk/title    "T"
-                      ::bk/author   "a"
-                      ::bk/borrower {::br/name      "Nn",
-                                     ::br/max-books 333}})
-(s/conform ::bk/book {::bk/title    "T"
-                      ::bk/author   "a"
-                      ::bk/borrower nil})
+(s/conform ::bk/book {::bk/title          "T"
+                      ::bk/author         "a"
+                      ::bk/maybe-borrower {::br/name      "Nn",
+                                           ::br/max-books 333}})
+(s/conform ::bk/book {::bk/title          "T"
+                      ::bk/author         "a"
+                      ::bk/maybe-borrower nil})
 
 ;; (s/exercise-fn `lib/add-item)
 ;; (stest/check `lib/add-item)

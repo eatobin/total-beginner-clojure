@@ -14,6 +14,10 @@
                      :max-books ::max-books)
         :ret ::borrower)
 
+(defn make-qual-borrower
+  [{qual-name :name, qual-max-books :max-books}]
+  (make-borrower qual-name qual-max-books))
+
 (defn get-name [borrower]
   (borrower ::name))
 (s/fdef get-name

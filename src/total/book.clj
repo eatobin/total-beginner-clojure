@@ -6,11 +6,11 @@
 (s/def ::title string?)
 (s/def ::author string?)
 (s/def ::maybe-borrower (s/or :just ::br/borrower :nothing nil?))
-(s/def ::book (s/keys :req [::title ::author ::borrower]))
+(s/def ::book (s/keys :req [::title ::author ::maybe-borrower]))
 
 (defn make-book
   ([title author] (make-book title author nil))
-  ([title author borrower] {::title title, ::author author, ::borrower borrower}))
+  ([title author m-borrower] {::title title, ::author author, ::maybe-borrower m-borrower}))
 (s/fdef make-book
         :args (s/cat :title ::title
                      :author ::author
@@ -30,16 +30,16 @@
         :ret ::author)
 
 (defn get-borrower [book]
-  (book ::borrower))
+  (book ::maybe-borrower))
 (s/fdef get-borrower
         :args (s/cat :book ::book)
         :ret ::maybe-borrower)
 
 (defn set-borrower [book borrower]
-  (assoc book ::borrower borrower))
+  (assoc book ::maybe-borrower borrower))
 (s/fdef set-borrower
         :args (s/cat :book ::book
-                     :borrower ::br/borrower)
+                     :borrower ::maybe-borrower)
         :ret ::book)
 
 (defn- available-string [book]
