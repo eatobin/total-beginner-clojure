@@ -20,6 +20,8 @@
 
 ;For CIDER:
 ;clj -A:test:cider-clj
+;clj -A:test:cider-clj -Spath
 
 ;Run tests:
 ;clj -A:test:runner
+;clj -A:test:runner -Spath
