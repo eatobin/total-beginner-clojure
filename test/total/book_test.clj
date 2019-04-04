@@ -19,23 +19,23 @@
 (s/conform ::bk/title
            (bk/get-title bk1))
 
-;(deftest get-author-test
-;  (is (= "Author1"
-;         (bk/get-author bk1))))
-;(s/conform ::dom/author
-;           (bk/get-author bk1))
-;
-;(deftest get-borrower-nil-test
-;  (is (nil? (bk/get-borrower bk1))))
-;(s/conform ::dom/borrower
-;           (bk/get-borrower bk1))
-;
-;(deftest get-borrower-someone-test
-;  (is (= br2
-;         (bk/get-borrower bk2))))
-;(s/conform ::dom/borrower
-;           (bk/get-borrower bk2))
-;
+(deftest get-author-test
+  (is (= "Author1"
+         (bk/get-author bk1))))
+(s/conform ::bk/author
+           (bk/get-author bk1))
+
+(deftest get-borrower-nil-test
+  (is (nil? (bk/get-borrower bk1))))
+(s/conform ::bk/maybe-borrower
+           (bk/get-borrower bk1))
+
+(deftest get-borrower-someone-test
+  (is (= br2
+         (bk/get-borrower bk2))))
+(s/conform ::bk/maybe-borrower
+           (bk/get-borrower bk2))
+
 ;(deftest book-to-string-nil-test
 ;  (is (= "Title1 by Author1; Available"
 ;         (bk/book-to-string bk1))))

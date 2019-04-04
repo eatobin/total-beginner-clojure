@@ -23,18 +23,18 @@
         :args (s/cat :book ::book)
         :ret ::title)
 
-;(defn get-author [book]
-;  (book :author))
-;(s/fdef get-author
-;        :args (s/cat :book :unq/book)
-;        :ret ::dom/author)
-;
-;(defn get-borrower [book]
-;  (book :borrower))
-;(s/fdef get-borrower
-;        :args (s/cat :book :unq/book)
-;        :ret ::dom/borrower)
-;
+(defn get-author [book]
+  (book ::author))
+(s/fdef get-author
+        :args (s/cat :book ::book)
+        :ret ::author)
+
+(defn get-borrower [book]
+  (book ::borrower))
+(s/fdef get-borrower
+        :args (s/cat :book ::book)
+        :ret ::maybe-borrower)
+
 (defn set-borrower [book borrower]
   (assoc book ::borrower borrower))
 (s/fdef set-borrower
