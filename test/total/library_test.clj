@@ -195,13 +195,12 @@
                  :is-error string?)
            (lib/json-string-to-brs json-string-borrowers))
 
-;(deftest json-parse-pass-bks-test
-;  (is (= bks1
-;         (lib/json-string-to-bks json-string-books))))
-;(s/conform (s/or :is-json (s/or :is-brs ::lib/brs
-;                                :is-bks ::lib/bks)
-;                 :is-error string?)
-;           (lib/json-string-to-brs json-string-books))
+(deftest json-parse-pass-bks-test
+  (is (= bks1
+         (lib/json-string-to-bks json-string-books-unqual))))
+(s/conform (s/or :is-json ::lib/bks
+                 :is-error string?)
+           (lib/json-string-to-bks json-string-books-unqual))
 
 (deftest collection-to-json-string-test
   (is (= json-string-books
