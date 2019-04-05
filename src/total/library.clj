@@ -123,13 +123,22 @@
       (if (nil? json-str)
         "JSON parse error"
         (into () (map br/make-qual-borrower json-str))))))
-;(s/fdef json-string-to-list
-;        :args (s/cat :json-string string?)
-;        :ret (s/or :is-json list?
-;                   :is-error string?))
 (s/fdef json-string-to-brs
         :args (s/cat :json-string string?)
         :ret (s/or :is-json ::brs
+                   :is-error string?))
+
+(defn json-string-to-bks [json-string]
+  (if (= json-string "File read error")
+    "File read error"
+    (let [json-str (try (doall (json/parse-string json-string true))
+                        (catch Exception _ nil))]
+      (if (nil? json-str)
+        "JSON parse error"
+        (into () (map bk/make-qual-book json-str))))))
+(s/fdef json-string-to-bks
+        :args (s/cat :json-string string?)
+        :ret (s/or :is-json ::bks
                    :is-error string?))
 
 (defn collection-to-json-string [collection]

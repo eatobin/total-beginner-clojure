@@ -27,6 +27,7 @@
 (def json-string-borrowers-bad "[{\"name\"\"Borrower1\",\"max-books\":1},{\"name\":\"Borrower2\",\"max-books\":2}]")
 (def json-string-borrowers "[{\"max-books\":2, \"name\":\"Borrower2\"},{\"name\":\"Borrower1\",\"max-books\":1}]")
 (def json-string-books "[{\"total.book/title\":\"Title1\",\"total.book/author\":\"Author1\",\"total.book/maybe-borrower\":{\"total.borrower/name\":\"Borrower1\",\"total.borrower/max-books\":1}},{\"total.book/title\":\"Title2\",\"total.book/author\":\"Author2\",\"total.book/maybe-borrower\":null}]")
+(def json-string-books-unqual "[{\"title\":\"Title1\",\"author\":\"Author1\",\"maybe-borrower\":{\"name\":\"Borrower1\",\"max-books\":1}},{\"title\":\"Title2\",\"author\":\"Author2\",\"maybe-borrower\":null}]")
 
 (deftest add-borrower-pass-test
   (is (= brs2
