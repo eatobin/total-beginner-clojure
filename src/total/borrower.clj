@@ -6,6 +6,7 @@
 (s/def ::name string?)
 (s/def ::max-books (s/and int? #(>= % 0)))
 (s/def ::borrower (s/keys :req [::name ::max-books]))
+(s/def :unq/borrower (s/keys :req-un [::name ::max-books]))
 
 (defn make-borrower [name max-books]
   {::name name, ::max-books max-books})
@@ -15,8 +16,11 @@
         :ret ::borrower)
 
 (defn make-qual-borrower
-  [{qual-name :name, qual-max-books :max-books}]
-  (make-borrower qual-name qual-max-books))
+  [{nq-name :name, nq-max-books :max-books}]
+  (make-borrower nq-name nq-max-books))
+(s/fdef make-qual-borrower
+        :args (s/cat :br-map :unq/borrower)
+        :ret ::borrower)
 
 (defn get-name [borrower]
   (borrower ::name))
