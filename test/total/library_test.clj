@@ -200,14 +200,14 @@
 (s/conform string?
            (lib/collection-to-json-string bks5))
 
-;(deftest library-to-string-test
-;  (is (= "Test Library: 2 books; 3 borrowers."
-;         (lib/library-to-string bks1 brs2))))
-;(s/conform string?
-;           (lib/library-to-string bks1 brs2))
+(deftest library-to-string-test
+  (is (= "Test Library: 2 books; 3 borrowers."
+         (lib/library-to-string bks1 brs2))))
+(s/conform string?
+           (lib/library-to-string bks1 brs2))
 
-;(deftest status-to-string-test
-;  (is (= "\n--- Status Report of Test Library ---\n\nTest Library: 3 books; 3 borrowers.\nTitle3 by Author3; Checked out to Borrower3\nTitle1 by Author1; Checked out to Borrower1\nTitle2 by Author2; Available\n\nBorrower3 (3 books)\nBorrower1 (1 books)\nBorrower2 (2 books)\n\n--- End of Status Report ---\n"
-;         (lib/status-to-string bks2 brs2))))
-;(s/conform string?
-;           (lib/status-to-string bks2 brs2))
+(deftest status-to-string-test
+  (is (= "\n--- Status Report of Test Library ---\n\nTest Library: 3 books; 3 borrowers.\nTitle1 by Author1; Checked out to Borrower1\nTitle2 by Author2; Available\nTitle3 by Author3; Checked out to Borrower3\n\nBorrower2 (2 books)\nBorrower1 (1 books)\nBorrower3 (3 books)\n\n--- End of Status Report ---\n"
+         (lib/status-to-string bks2 brs2))))
+(s/conform string?
+           (lib/status-to-string bks2 brs2))
