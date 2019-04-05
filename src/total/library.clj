@@ -5,8 +5,8 @@
             [clojure.spec.alpha :as s]
             [orchestra.spec.test :as ostest]))
 
-(s/def ::brs (s/coll-of ::br/borrower))
-(s/def ::bks (s/coll-of ::bk/book))
+(s/def ::brs (s/coll-of ::br/borrower :kind list?))
+(s/def ::bks (s/coll-of ::bk/book :kind list?))
 (s/def ::extract-fn-br-name
   (s/fspec :args (s/cat :borrower ::br/borrower)
            :ret ::br/name))
@@ -17,7 +17,7 @@
 (defn add-item [x xs]
   (if (some #{x} xs)
     xs
-    (cons x xs)))
+    (into () (cons x xs))))
 (s/fdef add-item
         :args (s/or
                 :is-brs (s/cat :x ::br/borrower :xs ::brs)
@@ -26,7 +26,7 @@
                    :ret-bks ::bks))
 
 (defn remove-book [book books]
-  (filter #(not= book %) books))
+  (into () (filter #(not= book %) books)))
 (s/fdef remove-book
         :args (s/cat :book ::bk/book :books ::bks)
         :ret ::bks)
@@ -56,10 +56,10 @@
                    :not-found nil?))
 
 (defn get-books-for-borrower [borrower books]
-  (for [bk books
-        :let [cb (bk/get-borrower bk)]
-        :when (= cb borrower)]
-    bk))
+  (into () (for [bk books
+                 :let [cb (bk/get-borrower bk)]
+                 :when (= cb borrower)]
+             bk)))
 (s/fdef get-books-for-borrower
         :args (s/cat :borrower ::br/borrower :books ::bks)
         :ret ::bks)
