@@ -6,7 +6,9 @@
 (s/def ::title string?)
 (s/def ::author string?)
 (s/def ::maybe-borrower (s/or :just ::br/borrower :nothing nil?))
+(s/def :unq/maybe-borrower (s/or :just :unq/borrower :nothing nil?))
 (s/def ::book (s/keys :req [::title ::author ::maybe-borrower]))
+(s/def :unq/book (s/keys :req-un [::title ::author :unq/maybe-borrower]))
 
 (defn make-book
   ([title author] (make-book title author nil))
@@ -15,6 +17,16 @@
         :args (s/cat :title ::title
                      :author ::author
                      :borrower (s/? ::maybe-borrower))
+        :ret ::book)
+
+(defn make-qual-book
+  [{nq-title :title, nq-author :author nq-maybe-borrower :maybe-borrower}]
+  (if (nil? nq-maybe-borrower)
+    (make-book nq-title nq-author nq-maybe-borrower)
+    (let [{nq-name :name, nq-max-books :max-books} nq-maybe-borrower]
+      (make-book nq-title nq-author (br/make-borrower nq-name nq-max-books)))))
+(s/fdef make-qual-book
+        :args (s/cat :bk-map :unq/book)
         :ret ::book)
 
 (defn get-title [book]
