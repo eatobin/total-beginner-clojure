@@ -182,17 +182,25 @@
 
 (deftest json-parse-fail-test
   (is (= "JSON parse error"
-         (lib/json-string-to-list json-string-borrowers-bad))))
-(s/conform (s/or :is-json list?
+         (lib/json-string-to-brs json-string-borrowers-bad))))
+(s/conform (s/or :is-json ::lib/brs
                  :is-error string?)
-           (lib/json-string-to-list json-string-borrowers-bad))
+           (lib/json-string-to-brs json-string-borrowers-bad))
 
-(deftest json-parse-pass-test
+(deftest json-parse-pass-brs-test
   (is (= brs1
-         (lib/json-string-to-list json-string-borrowers))))
-(s/conform (s/or :is-json list?
+         (lib/json-string-to-brs json-string-borrowers))))
+(s/conform (s/or :is-json ::lib/brs
                  :is-error string?)
-           (lib/json-string-to-list json-string-borrowers))
+           (lib/json-string-to-brs json-string-borrowers))
+
+;(deftest json-parse-pass-bks-test
+;  (is (= bks1
+;         (lib/json-string-to-bks json-string-books))))
+;(s/conform (s/or :is-json (s/or :is-brs ::lib/brs
+;                                :is-bks ::lib/bks)
+;                 :is-error string?)
+;           (lib/json-string-to-brs json-string-books))
 
 (deftest collection-to-json-string-test
   (is (= json-string-books

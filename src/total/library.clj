@@ -115,7 +115,7 @@
         :args (s/cat :title ::bk/title :books ::bks)
         :ret ::bks)
 
-(defn json-string-to-list [json-string]
+(defn json-string-to-brs [json-string]
   (if (= json-string "File read error")
     "File read error"
     (let [json-str (try (doall (json/parse-string json-string true))
@@ -123,9 +123,13 @@
       (if (nil? json-str)
         "JSON parse error"
         (into () (map br/make-qual-borrower json-str))))))
-(s/fdef json-string-to-list
+;(s/fdef json-string-to-list
+;        :args (s/cat :json-string string?)
+;        :ret (s/or :is-json list?
+;                   :is-error string?))
+(s/fdef json-string-to-brs
         :args (s/cat :json-string string?)
-        :ret (s/or :is-json list?
+        :ret (s/or :is-json ::brs
                    :is-error string?))
 
 (defn collection-to-json-string [collection]
