@@ -204,9 +204,9 @@
 
 (deftest collection-to-json-string-test
   (is (= json-string-books
-         (lib/collection-to-json-string bks5))))
+         (lib/brs-to-json-string bks5))))
 (s/conform string?
-           (lib/collection-to-json-string bks5))
+           (lib/brs-to-json-string bks5))
 
 (deftest library-to-string-test
   (is (= "Test Library: 2 books; 3 borrowers."

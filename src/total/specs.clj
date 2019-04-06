@@ -89,7 +89,7 @@
 (stest/check `mn/read-file-into-json-string)
 (stest/check `lib/json-string-to-brs)
 (stest/check `lib/json-string-to-bks)
-(stest/check `lib/collection-to-json-string)
+(stest/check `lib/brs-to-json-string)
 (stest/check `lib/library-to-string)
 (stest/check `lib/status-to-string)
 (s/exercise-fn `lib/status-to-string)

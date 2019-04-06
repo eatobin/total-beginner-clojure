@@ -111,7 +111,7 @@
       (print-status a-books a-borrowers)
 
       (println "Save the revised borrowers to \"borrowers-after.json\"")
-      (write-file-from-json-string (lib/collection-to-json-string (deref a-borrowers)) json-borrowers-file-after)
+      (write-file-from-json-string (lib/brs-to-json-string (deref a-borrowers)) json-borrowers-file-after)
 
       (println "Clear the whole library again:")
       (new-empty-a a-books a-borrowers)

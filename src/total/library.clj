@@ -141,11 +141,16 @@
         :ret (s/or :is-json ::bks
                    :is-error string?))
 
-(defn collection-to-json-string [collection]
-  (json/generate-string collection))
-(s/fdef collection-to-json-string
-        :args (s/or :is-brs (s/cat :collection ::brs)
-                    :is-bks (s/cat :collection ::bks))
+(defn brs-to-json-string [brs]
+  (json/generate-string (map br/qual-to-unqual-borrower brs)))
+(s/fdef brs-to-json-string
+        :args (s/cat :collection ::brs)
+        :ret string?)
+
+(defn bks-to-json-string [bks]
+  (json/generate-string (map bk/qual-to-unqual-book bks)))
+(s/fdef bks-to-json-string
+        :args (s/cat :collection ::bks)
         :ret string?)
 
 (defn library-to-string [books borrowers]
