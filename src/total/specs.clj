@@ -1,7 +1,7 @@
 (ns total.specs
   (:require [total.borrower :as br]
             [total.book :as bk]
-    ;; [total.library :as lib]
+            [total.library :as lib]
     ;; [total.main :as mn]
             [clojure.spec.alpha :as s]
             [clojure.spec.test.alpha :as stest]
@@ -67,28 +67,29 @@
                       ::bk/author         "a"
                       ::bk/maybe-borrower nil})
 
-;; (s/exercise-fn `lib/add-item)
-;; (stest/check `lib/add-item)
-;; (s/exercise-fn `lib/remove-book)
-;; (stest/check `lib/remove-book)
-;; (s/exercise-fn `lib/find-item)
-;; (stest/check `lib/find-item)
-;; (s/conform ::dom/extract-fn-br-name br/get-name)
-;; (s/explain ::dom/extract-fn-br-name br/get-name)
-;; (s/conform ::dom/extract-fn-bk-title bk/get-title)
-;; (s/explain ::dom/extract-fn-bk-title bk/get-title)
-;; (stest/check `lib/get-books-for-borrower)
-;; (s/exercise-fn `lib/get-books-for-borrower)
-;; (stest/check `lib/num-books-out)
-;; (s/exercise-fn `lib/num-books-out)
-;; (stest/check `lib/not-maxed-out?)
-;; (stest/check `lib/book-not-out?)
-;; (stest/check `lib/book-out?)
-;; (stest/check `lib/check-out)
-;; (stest/check `lib/check-in)
+(s/exercise-fn `lib/add-item)
+(stest/check `lib/add-item)
+(s/exercise-fn `lib/remove-book)
+(stest/check `lib/remove-book)
+(s/exercise-fn `lib/find-item)
+(stest/check `lib/find-item)
+(s/conform ::lib/extract-fn-br-name br/get-name)
+(s/explain ::lib/extract-fn-br-name br/get-name)
+(s/conform ::lib/extract-fn-bk-title bk/get-title)
+(s/explain ::lib/extract-fn-bk-title bk/get-title)
+(stest/check `lib/get-books-for-borrower)
+(s/exercise-fn `lib/get-books-for-borrower)
+(stest/check `lib/num-books-out)
+(s/exercise-fn `lib/num-books-out)
+(stest/check `lib/not-maxed-out?)
+(stest/check `lib/book-not-out?)
+(stest/check `lib/book-out?)
+(stest/check `lib/check-out)
+(stest/check `lib/check-in)
 ;; (stest/check `mn/read-file-into-json-string)
-;; (stest/check `lib/json-string-to-list)
-;; (stest/check `lib/collection-to-json-string)
-;; (stest/check `lib/library-to-string)
-;; (stest/check `lib/status-to-string)
-;; (s/exercise-fn `lib/status-to-string)
+(stest/check `lib/json-string-to-brs)
+(stest/check `lib/json-string-to-bks)
+(stest/check `lib/collection-to-json-string)
+(stest/check `lib/library-to-string)
+(stest/check `lib/status-to-string)
+(s/exercise-fn `lib/status-to-string)
