@@ -36,8 +36,8 @@
 
 (defn new-empty-a [a-books a-borrowers]
   (do
-    (reset! a-books [])
-    (reset! a-borrowers [])
+    (reset! a-books ())
+    (reset! a-borrowers ())
     (print-status a-books a-borrowers)))
 
 (def json-borrowers-file-before "borrowers-before.json")
@@ -47,8 +47,8 @@
 (def empty-file "empty.json")
 
 (defn -main [& _]
-  (let [a-borrowers (atom [])
-        a-books (atom [])]
+  (let [a-borrowers (atom ())
+        a-books (atom ())]
     (do
       (swap! a-borrowers (partial lib/add-item (br/make-borrower "Jim" 3)))
       (swap! a-borrowers (partial lib/add-item (br/make-borrower "Sue" 3)))
