@@ -5,13 +5,13 @@
             [clojure.spec.alpha :as s]))
 
 (def br2 {::br/name "Borrower2" ::br/max-books 2})
-(def bk1 (bk/make-book "Title1" "Author1"))
+(def bk1 (bk/make-qual-book "Title1" "Author1"))
 (def bk2 (bk/set-borrower bk1 br2))
 
 (s/conform ::bk/book
-           (bk/make-book "Title1" "Author1"))
+           (bk/make-qual-book "Title1" "Author1"))
 (s/conform ::bk/book
-           (bk/make-book "Title1" "Author1" br2))
+           (bk/make-qual-book "Title1" "Author1" br2))
 
 (deftest get-title-test
   (is (= "Title1"

@@ -10,22 +10,22 @@
 (s/def ::book (s/keys :req [::title ::author ::maybe-borrower]))
 (s/def :unq/book (s/keys :req-un [::title ::author :unq/maybe-borrower]))
 
-(defn make-book
-  ([title author] (make-book title author nil))
+(defn make-qual-book
+  ([title author] (make-qual-book title author nil))
   ([title author m-borrower] {::title title, ::author author, ::maybe-borrower m-borrower}))
-(s/fdef make-book
+(s/fdef make-qual-book
         :args (s/cat :title ::title
                      :author ::author
                      :borrower (s/? ::maybe-borrower))
         :ret ::book)
 
-(defn make-qual-book
+(defn unqual-to-qual-book
   [{nq-title :title, nq-author :author nq-maybe-borrower :maybe-borrower}]
   (if (nil? nq-maybe-borrower)
-    (make-book nq-title nq-author nq-maybe-borrower)
+    (make-qual-book nq-title nq-author nq-maybe-borrower)
     (let [{nq-name :name, nq-max-books :max-books} nq-maybe-borrower]
-      (make-book nq-title nq-author (br/make-qual-borrower nq-name nq-max-books)))))
-(s/fdef make-qual-book
+      (make-qual-book nq-title nq-author (br/make-qual-borrower nq-name nq-max-books)))))
+(s/fdef unqual-to-qual-book
         :args (s/cat :bk-map :unq/book)
         :ret ::book)
 

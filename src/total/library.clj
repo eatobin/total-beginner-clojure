@@ -135,7 +135,7 @@
                         (catch Exception _ nil))]
       (if (nil? json-str)
         "JSON parse error"
-        (into () (map bk/make-qual-book json-str))))))
+        (into () (map bk/unqual-to-qual-book json-str))))))
 (s/fdef json-string-to-bks
         :args (s/cat :json-string string?)
         :ret (s/or :is-json ::bks
