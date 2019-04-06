@@ -3,7 +3,7 @@
             [total.borrower :as br]
             [total.book :as bk]
             [total.library :as lib]
-    ;[total-beginner.main :as mn]
+            [total.main :as mn]
             [clojure.spec.alpha :as s]))
 
 (def br1 {::br/name "Borrower1" ::br/max-books 1})
@@ -163,23 +163,23 @@
 (s/conform ::lib/bks
            (lib/check-in "NoTitle" bks1))
 
-;(deftest read-file-pass
-;  (let [s (mn/read-file-into-json-string "empty.json")]
-;    (is (= '()
-;           (lib/json-string-to-list s)))))
-;(s/conform (s/or :is-json list?
-;                 :is-error string?)
-;           (let [s (mn/read-file-into-json-string "empty.json")]
-;             (lib/json-string-to-list s)))
-;
-;(deftest read-file-fail
-;  (let [s (mn/read-file-into-json-string "no-file.json")]
-;    (is (= "File read error"
-;           (lib/json-string-to-list s)))))
-;(s/conform (s/or :is-json list?
-;                 :is-error string?)
-;           (let [s (mn/read-file-into-json-string "no-file.json")]
-;             (lib/json-string-to-list s)))
+(deftest read-file-pass
+  (let [s (mn/read-file-into-json-string "empty.json")]
+    (is (= '()
+           (lib/json-string-to-brs s)))))
+(s/conform (s/or :is-json ::lib/brs
+                 :is-error string?)
+           (let [s (mn/read-file-into-json-string "empty.json")]
+             (lib/json-string-to-brs s)))
+
+(deftest read-file-fail
+  (let [s (mn/read-file-into-json-string "no-file.json")]
+    (is (= "File read error"
+           (lib/json-string-to-brs s)))))
+(s/conform (s/or :is-json ::lib/brs
+                 :is-error string?)
+           (let [s (mn/read-file-into-json-string "no-file.json")]
+             (lib/json-string-to-brs s)))
 
 (deftest json-parse-fail-test
   (is (= "JSON parse error"

@@ -2,7 +2,7 @@
   (:require [total.borrower :as br]
             [total.book :as bk]
             [total.library :as lib]
-    ;; [total.main :as mn]
+            [total.main :as mn]
             [clojure.spec.alpha :as s]
             [clojure.spec.test.alpha :as stest]
             [clojure.spec.gen.alpha :as sgen]
@@ -86,7 +86,7 @@
 (stest/check `lib/book-out?)
 (stest/check `lib/check-out)
 (stest/check `lib/check-in)
-;; (stest/check `mn/read-file-into-json-string)
+(stest/check `mn/read-file-into-json-string)
 (stest/check `lib/json-string-to-brs)
 (stest/check `lib/json-string-to-bks)
 (stest/check `lib/collection-to-json-string)
