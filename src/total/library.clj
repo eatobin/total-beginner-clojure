@@ -122,7 +122,7 @@
                         (catch Exception _ nil))]
       (if (nil? json-str)
         "JSON parse error"
-        (into () (map br/make-qual-borrower json-str))))))
+        (into () (map br/unqual-to-qual-borrower json-str))))))
 (s/fdef json-string-to-brs
         :args (s/cat :json-string string?)
         :ret (s/or :is-json ::brs

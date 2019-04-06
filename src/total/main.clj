@@ -50,8 +50,8 @@
   (let [a-borrowers (atom ())
         a-books (atom ())]
     (do
-      (swap! a-borrowers (partial lib/add-item (br/make-borrower "Jim" 3)))
-      (swap! a-borrowers (partial lib/add-item (br/make-borrower "Sue" 3)))
+      (swap! a-borrowers (partial lib/add-item (br/make-qual-borrower "Jim" 3)))
+      (swap! a-borrowers (partial lib/add-item (br/make-qual-borrower "Sue" 3)))
       (swap! a-books (partial lib/add-item (bk/make-book "War And Peace" "Tolstoy")))
       (swap! a-books (partial lib/add-item (bk/make-book "Great Expectations" "Dickens")))
       (println "\nJust created new library")
@@ -68,7 +68,7 @@
       (print-status a-books a-borrowers)
 
       (println "Add Eric and The Cat In The Hat")
-      (swap! a-borrowers (partial lib/add-item (br/make-borrower "Eric" 1)))
+      (swap! a-borrowers (partial lib/add-item (br/make-qual-borrower "Eric" 1)))
       (swap! a-books (partial lib/add-item (bk/make-book "The Cat In The Hat" "Dr. Seuss")))
       (println "Check Out Dr. Seuss to Eric")
       (swap! a-books (partial lib/check-out "Eric" "The Cat In The Hat" (deref a-borrowers)))
@@ -77,7 +77,7 @@
       (println "Now let's do some BAD stuff...\n")
 
       (println "Add a borrower that already exists (make-borrower \"Jim\" 3):")
-      (swap! a-borrowers (partial lib/add-item (br/make-borrower "Jim" 3)))
+      (swap! a-borrowers (partial lib/add-item (br/make-qual-borrower "Jim" 3)))
       (println "No change to Test Library:")
       (print-status a-books a-borrowers)
 
@@ -107,7 +107,7 @@
       (println "Lets read in a new library from \"borrowers-before.json\" and \"books-before.json\":")
       (new-a a-books a-borrowers json-borrowers-file-before json-books-file)
       (println "Add... a new borrower:")
-      (swap! a-borrowers (partial lib/add-item (br/make-borrower "BorrowerNew" 300)))
+      (swap! a-borrowers (partial lib/add-item (br/make-qual-borrower "BorrowerNew" 300)))
       (print-status a-books a-borrowers)
 
       (println "Save the revised borrowers to \"borrowers-after.json\"")

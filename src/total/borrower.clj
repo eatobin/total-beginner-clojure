@@ -8,17 +8,17 @@
 (s/def ::borrower (s/keys :req [::name ::max-books]))
 (s/def :unq/borrower (s/keys :req-un [::name ::max-books]))
 
-(defn make-borrower [name max-books]
+(defn make-qual-borrower [name max-books]
   {::name name, ::max-books max-books})
-(s/fdef make-borrower
+(s/fdef make-qual-borrower
         :args (s/cat :name ::name
                      :max-books ::max-books)
         :ret ::borrower)
 
-(defn make-qual-borrower
+(defn unqual-to-qual-borrower
   [{nq-name :name, nq-max-books :max-books}]
-  (make-borrower nq-name nq-max-books))
-(s/fdef make-qual-borrower
+  (make-qual-borrower nq-name nq-max-books))
+(s/fdef unqual-to-qual-borrower
         :args (s/cat :br-map :unq/borrower)
         :ret ::borrower)
 
