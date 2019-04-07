@@ -5,6 +5,23 @@
             [clojure.spec.alpha :as s]
             [orchestra.spec.test :as ostest]))
 
+;json-string-borrowers
+;=>
+;"[{\"max-books\":2, \"name\":\"Borrower2\"},{\"name\":\"Borrower1\",\"max-books\":1}]"
+;(def full (json/parse-string json-string-borrowers fields))
+;=> #'total.library/full
+;full
+;=>
+;(#:total.borrower{:max-books 2, :name "Borrower2"}
+;  #:total.borrower{:name "Borrower1", :max-books 1})
+;(def my-string (json/generate-string full {:key-fn (fn [k] (name k))}))
+;=> #'total.library/my-string
+;my-string
+;=>
+;"[{\"max-books\":2,\"name\":\"Borrower2\"},{\"name\":\"Borrower1\",\"max-books\":1}]"
+
+
+
 (s/def ::brs (s/coll-of ::br/borrower :kind list?))
 (s/def ::bks (s/coll-of ::bk/book :kind list?))
 (s/def ::extract-fn-br-name
