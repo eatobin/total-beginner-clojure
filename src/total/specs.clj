@@ -57,8 +57,8 @@
             ::bk/author         "a"
             ::bk/maybe-borrower {::br/name      "Nn",
                                  ::br/max-books 333}})
-(s/exercise-fn `bk/make-qual-book)
-(stest/check `bk/make-qual-book)
+(s/exercise-fn `bk/make-book)
+(stest/check `bk/make-book)
 (s/conform ::bk/book {::bk/title          "T"
                       ::bk/author         "a"
                       ::bk/maybe-borrower {::br/name      "Nn",

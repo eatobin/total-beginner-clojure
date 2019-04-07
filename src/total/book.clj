@@ -6,36 +6,17 @@
 (s/def ::title string?)
 (s/def ::author string?)
 (s/def ::maybe-borrower (s/or :just ::br/borrower :nothing nil?))
-(s/def :unq/maybe-borrower (s/or :just :unq/borrower :nothing nil?))
+;(s/def :unq/maybe-borrower (s/or :just :unq/borrower :nothing nil?))
 (s/def ::book (s/keys :req [::title ::author ::maybe-borrower]))
-(s/def :unq/book (s/keys :req-un [::title ::author :unq/maybe-borrower]))
+;(s/def :unq/book (s/keys :req-un [::title ::author :unq/maybe-borrower]))
 
-(defn make-qual-book
-  ([title author] (make-qual-book title author nil))
+(defn make-book
+  ([title author] (make-book title author nil))
   ([title author m-borrower] {::title title, ::author author, ::maybe-borrower m-borrower}))
-(s/fdef make-qual-book
+(s/fdef make-book
         :args (s/cat :title ::title
                      :author ::author
                      :borrower (s/? ::maybe-borrower))
-        :ret ::book)
-
-(defn make-unqual-book
-  ([title author] (make-unqual-book title author nil))
-  ([title author m-borrower] {:title title, :author author, :maybe-borrower m-borrower}))
-(s/fdef make-unqual-book
-        :args (s/cat :title ::title
-                     :author ::author
-                     :borrower (s/? :unq/maybe-borrower))
-        :ret :unq/book)
-
-(defn unqual-to-qual-book
-  [{nq-title :title, nq-author :author nq-maybe-borrower :maybe-borrower}]
-  (if (nil? nq-maybe-borrower)
-    (make-qual-book nq-title nq-author nq-maybe-borrower)
-    (let [{nq-name :name, nq-max-books :max-books} nq-maybe-borrower]
-      (make-qual-book nq-title nq-author (br/make-borrower nq-name nq-max-books)))))
-(s/fdef unqual-to-qual-book
-        :args (s/cat :bk-map :unq/book)
         :ret ::book)
 
 (defn get-title [book]

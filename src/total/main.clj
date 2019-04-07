@@ -52,8 +52,8 @@
     (do
       (swap! a-borrowers (partial lib/add-item (br/make-borrower "Jim" 3)))
       (swap! a-borrowers (partial lib/add-item (br/make-borrower "Sue" 3)))
-      (swap! a-books (partial lib/add-item (bk/make-qual-book "War And Peace" "Tolstoy")))
-      (swap! a-books (partial lib/add-item (bk/make-qual-book "Great Expectations" "Dickens")))
+      (swap! a-books (partial lib/add-item (bk/make-book "War And Peace" "Tolstoy")))
+      (swap! a-books (partial lib/add-item (bk/make-book "Great Expectations" "Dickens")))
       (println "\nJust created new library")
       (print-status a-books a-borrowers)
 
@@ -69,7 +69,7 @@
 
       (println "Add Eric and The Cat In The Hat")
       (swap! a-borrowers (partial lib/add-item (br/make-borrower "Eric" 1)))
-      (swap! a-books (partial lib/add-item (bk/make-qual-book "The Cat In The Hat" "Dr. Seuss")))
+      (swap! a-books (partial lib/add-item (bk/make-book "The Cat In The Hat" "Dr. Seuss")))
       (println "Check Out Dr. Seuss to Eric")
       (swap! a-books (partial lib/check-out "Eric" "The Cat In The Hat" (deref a-borrowers)))
       (print-status a-books a-borrowers)
@@ -82,7 +82,7 @@
       (print-status a-books a-borrowers)
 
       (println "Add a book that already exists (make-book \"War And Peace\" \"Tolstoy\" nil):")
-      (swap! a-books (partial lib/add-item (bk/make-qual-book "War And Peace" "Tolstoy")))
+      (swap! a-books (partial lib/add-item (bk/make-book "War And Peace" "Tolstoy")))
       (println "No change to Test Library:")
       (print-status a-books a-borrowers)
 
