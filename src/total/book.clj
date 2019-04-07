@@ -19,6 +19,15 @@
                      :borrower (s/? ::maybe-borrower))
         :ret ::book)
 
+(defn make-unqual-book
+  ([title author] (make-unqual-book title author nil))
+  ([title author m-borrower] {:title title, :author author, :maybe-borrower m-borrower}))
+(s/fdef make-unqual-book
+        :args (s/cat :title ::title
+                     :author ::author
+                     :borrower (s/? :unq/maybe-borrower))
+        :ret :unq/book)
+
 (defn unqual-to-qual-book
   [{nq-title :title, nq-author :author nq-maybe-borrower :maybe-borrower}]
   (if (nil? nq-maybe-borrower)
