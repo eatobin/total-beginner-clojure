@@ -5,23 +5,6 @@
             [clojure.spec.alpha :as s]
             [orchestra.spec.test :as ostest]))
 
-;json-string-borrowers
-;=>
-;"[{\"max-books\":2, \"name\":\"Borrower2\"},{\"name\":\"Borrower1\",\"max-books\":1}]"
-;(def full (json/parse-string json-string-borrowers fields))
-;=> #'total.library/full
-;full
-;=>
-;(#:total.borrower{:max-books 2, :name "Borrower2"}
-;  #:total.borrower{:name "Borrower1", :max-books 1})
-;(def my-string (json/generate-string full {:key-fn (fn [k] (name k))}))
-;=> #'total.library/my-string
-;my-string
-;=>
-;"[{\"max-books\":2,\"name\":\"Borrower2\"},{\"name\":\"Borrower1\",\"max-books\":1}]"
-
-
-
 (s/def ::brs (s/coll-of ::br/borrower :kind list?))
 (s/def ::bks (s/coll-of ::bk/book :kind list?))
 (s/def ::extract-fn-br-name
@@ -30,6 +13,7 @@
 (s/def ::extract-fn-bk-title
   (s/fspec :args (s/cat :book ::bk/book)
            :ret ::bk/title))
+(def br-fields {"name" ::br/name, "max-books" ::br/max-books})
 
 (defn add-item [x xs]
   (if (some #{x} xs)
@@ -132,43 +116,64 @@
         :args (s/cat :title ::bk/title :books ::bks)
         :ret ::bks)
 
+
+;json-string-borrowers
+;=>
+;"[{\"max-books\":2, \"name\":\"Borrower2\"},{\"name\":\"Borrower1\",\"max-books\":1}]"
+;(def full (json/parse-string json-string-borrowers fields))
+;=> #'total.library/full
+;full
+;=>
+;(#:total.borrower{:max-books 2, :name "Borrower2"}
+;  #:total.borrower{:name "Borrower1", :max-books 1})
+;(def my-string (json/generate-string full {:key-fn (fn [k] (name k))}))
+;=> #'total.library/my-string
+;my-string
+;=>
+;"[{\"max-books\":2,\"name\":\"Borrower2\"},{\"name\":\"Borrower1\",\"max-books\":1}]"
+
+
+
+
+
+
 (defn json-string-to-brs [json-string]
   (if (= json-string "File read error")
     "File read error"
-    (let [json-str (try (doall (json/parse-string json-string true))
+    (let [json-str (try (doall (json/parse-string json-string br-fields))
                         (catch Exception _ nil))]
       (if (nil? json-str)
         "JSON parse error"
-        (into () (map br/unqual-to-qual-borrower json-str))))))
+        (into () json-str)))))
 (s/fdef json-string-to-brs
         :args (s/cat :json-string string?)
         :ret (s/or :is-json ::brs
                    :is-error string?))
 
-(defn json-string-to-bks [json-string]
-  (if (= json-string "File read error")
-    "File read error"
-    (let [json-str (try (doall (json/parse-string json-string true))
-                        (catch Exception _ nil))]
-      (if (nil? json-str)
-        "JSON parse error"
-        (into () (map bk/unqual-to-qual-book json-str))))))
-(s/fdef json-string-to-bks
-        :args (s/cat :json-string string?)
-        :ret (s/or :is-json ::bks
-                   :is-error string?))
-
-(defn brs-to-json-string [brs]
-  (json/generate-string (map br/qual-to-unqual-borrower brs)))
-(s/fdef brs-to-json-string
-        :args (s/cat :collection ::brs)
-        :ret string?)
-
-(defn bks-to-json-string [bks]
-  (json/generate-string (map bk/qual-to-unqual-book bks)))
-(s/fdef bks-to-json-string
-        :args (s/cat :collection ::bks)
-        :ret string?)
+;(defn json-string-to-bks [json-string]
+;  (if (= json-string "File read error")
+;    "File read error"
+;    (let [json-str (try (doall (json/parse-string json-string true))
+;                        (catch Exception _ nil))]
+;      (if (nil? json-str)
+;        "JSON parse error"
+;        (into () (map bk/unqual-to-qual-book json-str))))))
+;(s/fdef json-string-to-bks
+;        :args (s/cat :json-string string?)
+;        :ret (s/or :is-json ::bks
+;                   :is-error string?))
+;
+;(defn brs-to-json-string [brs]
+;  (json/generate-string (map br/qual-to-unqual-borrower brs)))
+;(s/fdef brs-to-json-string
+;        :args (s/cat :collection ::brs)
+;        :ret string?)
+;
+;(defn bks-to-json-string [bks]
+;  (json/generate-string (map bk/qual-to-unqual-book bks)))
+;(s/fdef bks-to-json-string
+;        :args (s/cat :collection ::bks)
+;        :ret string?)
 
 (defn library-to-string [books borrowers]
   (str "Test Library: "
