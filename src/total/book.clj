@@ -33,7 +33,7 @@
   (if (nil? nq-maybe-borrower)
     (make-qual-book nq-title nq-author nq-maybe-borrower)
     (let [{nq-name :name, nq-max-books :max-books} nq-maybe-borrower]
-      (make-qual-book nq-title nq-author (br/make-qual-borrower nq-name nq-max-books)))))
+      (make-qual-book nq-title nq-author (br/make-borrower nq-name nq-max-books)))))
 (s/fdef unqual-to-qual-book
         :args (s/cat :bk-map :unq/book)
         :ret ::book)

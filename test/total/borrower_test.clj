@@ -3,9 +3,9 @@
             [total.borrower :as br]
             [clojure.spec.alpha :as s]))
 
-(def br1 (br/make-qual-borrower "Borrower1" 1))
+(def br1 (br/make-borrower "Borrower1" 1))
 (s/conform ::br/borrower
-           (br/make-qual-borrower "Borrower1" 1))
+           (br/make-borrower "Borrower1" 1))
 
 (deftest get-name-test
   (is (= "Borrower1"

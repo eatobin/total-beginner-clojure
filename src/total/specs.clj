@@ -47,8 +47,8 @@
 (sgen/generate (s/gen int?))
 
 (s/explain ::br/borrower {::br/name "me" ::br/max-books 4})
-(s/exercise-fn `br/make-qual-borrower)
-(stest/check `br/make-qual-borrower)
+(s/exercise-fn `br/make-borrower)
+(stest/check `br/make-borrower)
 (stest/check `br/get-name)
 (stest/check `br/set-name)
 
