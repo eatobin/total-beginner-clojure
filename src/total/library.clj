@@ -14,6 +14,7 @@
   (s/fspec :args (s/cat :book ::bk/book)
            :ret ::bk/title))
 (def br-fields {"name" ::br/name, "max-books" ::br/max-books})
+(def bk-fields {"title" ::bk/title, "author" ::bk/author, "maybe-borrower" ::bk/maybe-borrower, "name" ::br/name, "max-books" ::br/max-books})
 
 (defn add-item [x xs]
   (if (some #{x} xs)
@@ -150,19 +151,19 @@
         :ret (s/or :is-json ::brs
                    :is-error string?))
 
-;(defn json-string-to-bks [json-string]
-;  (if (= json-string "File read error")
-;    "File read error"
-;    (let [json-str (try (doall (json/parse-string json-string true))
-;                        (catch Exception _ nil))]
-;      (if (nil? json-str)
-;        "JSON parse error"
-;        (into () (map bk/unqual-to-qual-book json-str))))))
+(defn json-string-to-bks [json-string]
+  (if (= json-string "File read error")
+    "File read error"
+    (let [json-str (try (doall (json/parse-string json-string bk-fields))
+                        (catch Exception _ nil))]
+      (if (nil? json-str)
+        "JSON parse error"
+        (into () json-str)))))
 ;(s/fdef json-string-to-bks
 ;        :args (s/cat :json-string string?)
 ;        :ret (s/or :is-json ::bks
 ;                   :is-error string?))
-;
+
 ;(defn brs-to-json-string [brs]
 ;  (json/generate-string (map br/qual-to-unqual-borrower brs)))
 ;(s/fdef brs-to-json-string
