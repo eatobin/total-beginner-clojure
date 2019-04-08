@@ -6,9 +6,7 @@
 (s/def ::title string?)
 (s/def ::author string?)
 (s/def ::maybe-borrower (s/or :just ::br/borrower :nothing nil?))
-;(s/def :unq/maybe-borrower (s/or :just :unq/borrower :nothing nil?))
 (s/def ::book (s/keys :req [::title ::author ::maybe-borrower]))
-;(s/def :unq/book (s/keys :req-un [::title ::author :unq/maybe-borrower]))
 
 (defn make-book
   ([title author] (make-book title author nil))
