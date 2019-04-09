@@ -130,6 +130,20 @@
         :ret (s/or :is-json ::brs
                    :is-error string?))
 
+(defn json-string-to-list [json-string fields]
+  (if (= json-string "File read error")
+    "File read error"
+    (let [json-str (try (doall (json/parse-string json-string fields))
+                        (catch Exception _ nil))]
+      (if (nil? json-str)
+        "JSON parse error"
+        (into () json-str)))))
+(s/fdef json-string-to-list
+        :args (s/cat :json-string string? :fields map?)
+        :ret (s/or :is-json-brs ::brs
+                   :is-json-bks ::bks
+                   :is-error string?))
+
 (defn json-string-to-bks [json-string]
   (if (= json-string "File read error")
     "File read error"
