@@ -117,19 +117,6 @@
         :args (s/cat :title ::bk/title :books ::bks)
         :ret ::bks)
 
-(defn json-string-to-brs [json-string]
-  (if (= json-string "File read error")
-    "File read error"
-    (let [json-str (try (doall (json/parse-string json-string br-fields))
-                        (catch Exception _ nil))]
-      (if (nil? json-str)
-        "JSON parse error"
-        (into () json-str)))))
-(s/fdef json-string-to-brs
-        :args (s/cat :json-string string?)
-        :ret (s/or :is-json ::brs
-                   :is-error string?))
-
 (defn json-string-to-list [json-string fields]
   (if (= json-string "File read error")
     "File read error"
@@ -142,19 +129,6 @@
         :args (s/cat :json-string string? :fields map?)
         :ret (s/or :is-json-brs ::brs
                    :is-json-bks ::bks
-                   :is-error string?))
-
-(defn json-string-to-bks [json-string]
-  (if (= json-string "File read error")
-    "File read error"
-    (let [json-str (try (doall (json/parse-string json-string bk-fields))
-                        (catch Exception _ nil))]
-      (if (nil? json-str)
-        "JSON parse error"
-        (into () json-str)))))
-(s/fdef json-string-to-bks
-        :args (s/cat :json-string string?)
-        :ret (s/or :is-json ::bks
                    :is-error string?))
 
 (defn collection-to-json-string [collection]

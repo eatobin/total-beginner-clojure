@@ -23,8 +23,8 @@
 (defn new-a [a-books a-borrowers brs-file bks-file]
   (let [json-brs-str (read-file-into-json-string brs-file)
         json-bks-str (read-file-into-json-string bks-file)
-        brs (lib/json-string-to-brs json-brs-str)
-        bks (lib/json-string-to-bks json-bks-str)]
+        brs (lib/json-string-to-list json-brs-str lib/br-fields)
+        bks (lib/json-string-to-list json-bks-str lib/bk-fields)]
     (do
       (if (or (= brs "File read error") (= brs "JSON parse error"))
         (println (str "\n" brs))
