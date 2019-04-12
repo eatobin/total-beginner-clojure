@@ -13,6 +13,21 @@
 (s/conform ::bk/book
            (bk/make-book "Title1" "Author1" br2))
 
+(s/conform (s/cat :title ::bk/title
+                  :author ::bk/author
+                  :borrower (s/? ::bk/maybe-borrower))
+           ["t" "a"])
+
+(s/conform (s/cat :title ::bk/title
+                  :author ::bk/author
+                  :borrower (s/? ::bk/maybe-borrower))
+           ["t" "a" nil])
+
+(s/conform (s/cat :title ::bk/title
+                  :author ::bk/author
+                  :borrower (s/? ::bk/maybe-borrower))
+           ["t" "a" br2])
+
 (deftest get-title-test
   (is (= "Title1"
          (bk/get-title bk1))))
