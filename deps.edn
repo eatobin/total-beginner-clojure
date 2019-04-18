@@ -2,9 +2,8 @@
  :paths ["resources" "src"]
 
  :deps  {
-         org.clojure/clojure {:mvn/version "1.10.0"}
-         cheshire            {:mvn/version "5.8.1"}
-         orchestra           {:mvn/version "2019.02.06-1"}
+         cheshire  {:mvn/version "5.8.1"}
+         orchestra {:mvn/version "2019.02.06-1"}
          }
 
  :aliases
@@ -20,10 +19,6 @@
                {:extra-deps {org.clojure/test.check {:mvn/version "0.9.0"}}
                 :main-opts  ["-m" "total.main"]}}
  }
-
-;For CIDER:
-;clj -A:test:cider-clj
-;clj -A:test:cider-clj -Spath
 
 ;Run tests:
 ;clj -A:test:runner
