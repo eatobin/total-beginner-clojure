@@ -26,3 +26,6 @@
 
 ;Run main:
 ;clj -A:mainer
+
+;Make new:
+;https://github.com/seancorfield/clj-new
