@@ -1,4 +1,4 @@
-X{
+{
  :paths ["resources" "src"]
 
  :deps  {
