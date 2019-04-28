@@ -29,3 +29,6 @@
 
 ;Make new:
 ;https://github.com/seancorfield/clj-new
+
+;k-repl:
+;clojure -A:k-repl
