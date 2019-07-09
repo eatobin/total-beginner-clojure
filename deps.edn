@@ -28,5 +28,9 @@
 ;Make new:
 ;https://github.com/seancorfield/clj-new
 
-;k-repl:
+;For k-repl:
 ;clojure -A:k-repl
+;clojure -A:k-repl -Spath
+
+;Check for outdated deps:
+;clojure -A:outdated -a outdated
