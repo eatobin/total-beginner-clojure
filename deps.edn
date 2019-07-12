@@ -1,29 +1,33 @@
 {
- :paths ["resources" "src" "test"]
+  :paths ["resources" "src" "test"]
 
- :deps  {
-         cheshire  {:mvn/version "5.8.1"}
-         orchestra {:mvn/version "2019.02.06-1"}
-         }
+  :deps {
+    cheshire  {:mvn/version "5.8.1"}
+    orchestra {:mvn/version "2019.02.06-1"}
+  }
 
- :aliases
-        {:runner
-         {:extra-deps {com.cognitect/test-runner
-                       {:git/url "https://github.com/cognitect-labs/test-runner"
-                        :sha     "76568540e7f40268ad2b646110f237a60295fa3c"}}
-          :main-opts  ["-m" "cognitect.test-runner"
-                       "-d" "test"]}
-         :mainer
-         {:main-opts ["-m" "total.main"]}
-         }
- }
+  :aliases {
+    :runner {
+      :extra-deps {
+        com.cognitect/test-runner {
+          :git/url "https://github.com/cognitect-labs/test-runner"
+          :sha "76568540e7f40268ad2b646110f237a60295fa3c"
+        }
+      }
+      :main-opts ["-m" "cognitect.test-runner" "-d" "test"]
+    }
+    :mainer {
+      :main-opts ["-m" "total.main"]
+    }
+  }  
+}
 
-;Run tests:
-;clj -A:runner
-;clj -A:runner -Spath
+;Aliases from usr/share/clojure/deps.edn:
 
-;Run main:
-;clj -A:mainer
+;:deps {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.6.496"}}}
+;:test {:extra-paths ["test"]}
+
+;Aliases from ~/.clojure/deps.edn:
 
 ;Make new:
 ;https://github.com/seancorfield/clj-new
@@ -34,3 +38,12 @@
 
 ;Check for outdated deps:
 ;clojure -A:outdated -a outdated
+
+; In this project:
+
+;Run tests:
+;clj -A:runner
+;clj -A:runner -Spath
+
+;Run main:
+;clj -A:mainer
