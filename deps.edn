@@ -24,7 +24,7 @@
   }  
 }
 
-;Aliases from usr/share/clojure/deps.edn:
+;Aliases from /usr/local/lib/clojure/deps.edn:
 
 ;:deps {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.6.496"}}}
 ;:test {:extra-paths ["test"]}
