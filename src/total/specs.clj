@@ -46,7 +46,7 @@
 
 (sgen/generate (s/gen int?))
 
-(s/explain ::br/borrower {::br/name "me" ::br/max-books 4})
+(s/explain ::br/borrower {::br/name "me" ::br/maxX-books 4})
 (s/exercise-fn `br/make-borrower)
 (stest/check `br/make-borrower)
 (stest/check `br/get-name)
@@ -56,13 +56,13 @@
            {::bk/title          "T"
             ::bk/author         "a"
             ::bk/maybe-borrower {::br/name      "Nn",
-                                 ::br/max-books 333}})
+                                 ::br/maxX-books 333}})
 (s/exercise-fn `bk/make-book)
 (stest/check `bk/make-book)
 (s/conform ::bk/book {::bk/title          "T"
                       ::bk/author         "a"
                       ::bk/maybe-borrower {::br/name      "Nn",
-                                           ::br/max-books 333}})
+                                           ::br/maxX-books 333}})
 (s/conform ::bk/book {::bk/title          "T"
                       ::bk/author         "a"
                       ::bk/maybe-borrower nil})
@@ -81,7 +81,7 @@
 (s/exercise-fn `lib/get-books-for-borrower)
 (stest/check `lib/num-books-out)
 (s/exercise-fn `lib/num-books-out)
-(stest/check `lib/not-maxed-out?)
+(stest/check `lib/not-maxXed-out?)
 (stest/check `lib/book-not-out?)
 (stest/check `lib/book-out?)
 (stest/check `lib/check-out)

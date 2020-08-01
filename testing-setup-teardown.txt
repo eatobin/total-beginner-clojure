@@ -1,5 +1,5 @@
 (defn setup []
-  (def br1 {:name "Borrower1" :max-books 1}))
+  (def br1 {:name "Borrower1" :maxX-books 1}))
 
 (defn teardown [])
 

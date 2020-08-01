@@ -4,14 +4,14 @@
    [orchestra.spec.test :as ostest]))
 
 (s/def ::name string?)
-(s/def ::max-books (s/and int? #(>= % 0)))
-(s/def ::borrower (s/keys :req [::name ::max-books]))
+(s/def ::maxX-books (s/and int? #(>= % 0)))
+(s/def ::borrower (s/keys :req [::name ::maxX-books]))
 
-(defn make-borrower [name max-books]
-  {::name name, ::max-books max-books})
+(defn make-borrower [name maxX-books]
+  {::name name, ::maxX-books maxX-books})
 (s/fdef make-borrower
   :args (s/cat :name ::name
-               :max-books ::max-books)
+               :maxX-books ::maxX-books)
   :ret ::borrower)
 
 (defn get-name [borrower]
@@ -27,21 +27,21 @@
                :name ::name)
   :ret ::borrower)
 
-(defn get-max-books [borrower]
-  (borrower ::max-books))
-(s/fdef get-max-books
+(defn get-maxX-books [borrower]
+  (borrower ::maxX-books))
+(s/fdef get-maxX-books
   :args (s/cat :borrower ::borrower)
-  :ret ::max-books)
+  :ret ::maxX-books)
 
-(defn set-max-books [borrower max-books]
-  (assoc borrower ::max-books max-books))
-(s/fdef set-max-books
+(defn set-maxX-books [borrower maxX-books]
+  (assoc borrower ::maxX-books maxX-books))
+(s/fdef set-maxX-books
   :args (s/cat :borrower ::borrower
-               :max-books ::max-books)
+               :maxX-books ::maxX-books)
   :ret ::borrower)
 
 (defn borrower-to-string [borrower]
-  (str (get-name borrower) " (" (get-max-books borrower) " books)"))
+  (str (get-name borrower) " (" (get-maxX-books borrower) " books)"))
 (s/fdef borrower-to-string
   :args (s/cat :borrower ::borrower)
   :ret string?)
