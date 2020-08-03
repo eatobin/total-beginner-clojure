@@ -18,15 +18,17 @@
           (partition 2 1 coll)))
 
 (def property
-  (prop/for-all [v (gen/vector gen/small-integer)]
-                (let [s (sort v)]
-                  (and (= (count v) (count s))
-                       (ascending? s)))))
+  (prop/for-all* [(gen/vector gen/small-integer)]
+                 (fn [v]
+                   (let [s (sort v)]
+                     (and (= (count v) (count s))
+                          (ascending? s))))))
 (tc/quick-check 100 property)
 
 (def bad-property
-  (prop/for-all [v (gen/vector gen/small-integer)]
-                (ascending? v)))
+  (prop/for-all* [(gen/vector gen/small-integer)]
+                 (fn [v]
+                   (ascending? v))))
 (tc/quick-check 100 bad-property)
 
 (gen/sample gen/small-integer)
