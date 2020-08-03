@@ -17,25 +17,25 @@
   (every? (fn [[a b]] (<= a b))
           (partition 2 1 coll)))
 (def property
-  (prop/for-all [v (gen/vector gen/int)]
+  (prop/for-all [v (gen/vector gen/small-integer)]
                 (let [s (sort v)]
                   (and (= (count v) (count s))
                        (ascending? s)))))
 (tc/quick-check 100 property)
 (def bad-property
-  (prop/for-all [v (gen/vector gen/int)]
+  (prop/for-all [v (gen/vector gen/small-integer)]
                 (ascending? v)))
 (tc/quick-check 100 bad-property)
 
-(gen/sample gen/int)
-(gen/sample gen/int 20)
-(take 1 (gen/sample-seq gen/int))
+(gen/sample gen/small-integer)
+(gen/sample gen/small-integer 20)
+(take 1 (gen/sample-seq gen/small-integer))
 (gen/sample (gen/vector gen/nat))
 (gen/sample (gen/list gen/boolean))
 (gen/sample (gen/tuple gen/nat gen/boolean gen/ratio))
 (gen/sample (gen/tuple gen/nat gen/boolean gen/ratio))
 
-(gen/sample (gen/fmap set (gen/vector gen/int)))
+(gen/sample (gen/fmap set (gen/vector gen/small-integer)))
 
 (def keyword-vector (gen/such-that not-empty (gen/vector gen/keyword)))
 (def vec-and-elem
