@@ -8,7 +8,7 @@
             [clojure.spec.gen.alpha :as sgen]
             [clojure.test.check :as tc]
             [clojure.test.check.generators :as gen]
-            [clojure.test.check.properties :as props]))
+            [clojure.test.check.properties :as prop]))
 
 (defn ascending?
   "clojure.core/sorted? doesn't do what we might expect, so we write our
@@ -17,20 +17,17 @@
   (every? (fn [[a b]] (<= a b))
           (partition 2 1 coll)))
 
-(for-all [a gen/small-integer]
-               (>= (+ a a) a))
+(def property
+  (prop/for-all [v (gen/vector gen/small-integer)]
+                (let [s (sort v)]
+                  (and (= (count v) (count s))
+                       (ascending? s)))))
+(tc/quick-check 100 property)
 
-; (def property
-;;   (prop/for-all [v (gen/vector gen/small-integer)]
-;;                 (let [s (sort v)]
-;;                   (and (= (count v) (count s))
-                       ;; (ascending? s)))))
-;; (tc/quick-check 100 property)
-;; (def bad-property
-;;   (prop/for-all [v (gen/vector gen/small-integer)]
-;;                 (ascending? v)))
-;; (
- ;; tc/quick-check 100 bad-property)
+(def bad-property
+  (prop/for-all [v (gen/vector gen/small-integer)]
+                (ascending? v)))
+(tc/quick-check 100 bad-property)
 
 (gen/sample gen/small-integer)
 (gen/sample gen/small-integer 20)
