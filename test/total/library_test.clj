@@ -1,5 +1,5 @@
 (ns total.library-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [deftest is]]
             [total.borrower :as br]
             [total.book :as bk]
             [total.library :as lib]
