@@ -1,5 +1,5 @@
 (ns total.borrower-test
-  (:require [clojure.test :refer [deftest is]]
+  (:require [clojure.test :refer :all]
             [total.borrower :as br]
             [clojure.spec.alpha :as s]))
 
