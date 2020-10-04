@@ -1,3 +1,5 @@
+;clojure -M:eat/orchestra:eat/test -m total.main
+
 (ns total.main
   (:require [total.borrower :as br]
             [total.book :as bk]
@@ -14,8 +16,8 @@
     (slurp file)
     "File read error"))
 (s/fdef read-file-into-json-string
-  :args (s/cat :file string?)
-  :ret string?)
+        :args (s/cat :file string?)
+        :ret string?)
 
 (defn write-file-from-json-string [string file]
   (spit file string))
