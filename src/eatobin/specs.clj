@@ -1,8 +1,8 @@
-(ns total.specs
-  (:require [total.borrower :as br]
-            [total.book :as bk]
-            [total.library :as lib]
-            [total.main :as mn]
+(ns eatobin.specs
+  (:require [eatobin.borrower :as br]
+            [eatobin.book :as bk]
+            [eatobin.library :as lib]
+            [eatobin.main :as mn]
             [clojure.spec.alpha :as s]
             [clojure.spec.test.alpha :as stest]
             [clojure.spec.gen.alpha :as sgen]

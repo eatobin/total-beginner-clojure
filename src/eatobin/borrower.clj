@@ -1,4 +1,4 @@
-(ns total.borrower
+(ns eatobin.borrower
   (:require
    [clojure.spec.alpha :as s]
    [orchestra.spec.test :as ostest]))

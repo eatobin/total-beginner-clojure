@@ -1,6 +1,6 @@
-(ns total.borrower-test
+(ns eatobin.borrower-test
   (:require [clojure.test :refer [deftest is]]
-            [total.borrower :as br]
+            [eatobin.borrower :as br]
             [clojure.spec.alpha :as s]))
 
 (def br1 (br/make-borrower "Borrower1" 1))
