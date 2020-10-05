@@ -1,12 +1,13 @@
-;clojure -M:eat/orchestra:eat/test -m eatobin.main
+;clojure -M:eat/orchestra:eat/test -m eatobin.total
 
-(ns eatobin.main
+(ns eatobin.total
   (:require [eatobin.borrower :as br]
             [eatobin.book :as bk]
             [eatobin.library :as lib]
             [clojure.java.io :as io]
             [clojure.spec.alpha :as s]
-            [orchestra.spec.test :as ostest]))
+            [orchestra.spec.test :as ostest])
+  (:gen-class))
 
 (defn print-status [a-books a-borrowers]
   (println (lib/status-to-string (deref a-books) (deref a-borrowers))))

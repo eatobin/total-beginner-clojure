@@ -2,7 +2,7 @@
   (:require [eatobin.borrower :as br]
             [eatobin.book :as bk]
             [eatobin.library :as lib]
-            [eatobin.main :as mn]
+            [eatobin.total :as mn]
             [clojure.spec.alpha :as s]
             [clojure.spec.test.alpha :as stest]
             [clojure.spec.gen.alpha :as sgen]

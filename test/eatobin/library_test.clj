@@ -3,7 +3,7 @@
             [eatobin.borrower :as br]
             [eatobin.book :as bk]
             [eatobin.library :as lib]
-            [eatobin.main :as mn]
+            [eatobin.total :as mn]
             [clojure.spec.alpha :as s]))
 
 (def br1 {::br/name "Borrower1" ::br/maxX-books 1})
