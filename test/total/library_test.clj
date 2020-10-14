@@ -6,9 +6,9 @@
             [total.total :as mn]
             [clojure.spec.alpha :as s]))
 
-(def br1 {::br/name "Borrower1" ::br/maxX-books 1})
-(def br2 {::br/name "Borrower2" ::br/maxX-books 2})
-(def br3 {::br/name "Borrower3" ::br/maxX-books 3})
+(def br1 {::br/name "Borrower1" ::br/max-books 1})
+(def br2 {::br/name "Borrower2" ::br/max-books 2})
+(def br3 {::br/name "Borrower3" ::br/max-books 3})
 
 (def brs1 (list br1 br2))
 (def brs2 (list br2 br1 br3))
@@ -24,9 +24,9 @@
 (def bks4 (list bk2 {::bk/title "Title1", ::bk/author "Author1", ::bk/maybe-borrower nil}))
 (def bks5 (list bk1 bk2))
 
-(def json-string-borrowers-bad "[{\"name\"\"Borrower1\",\"maxX-books\":1},{\"name\":\"Borrower2\",\"maxX-books\":2}]")
-(def json-string-borrowers "[{\"maxX-books\":2, \"name\":\"Borrower2\"},{\"name\":\"Borrower1\",\"maxX-books\":1}]")
-(def json-string-books "[{\"title\":\"Title1\",\"author\":\"Author1\",\"maybe-borrower\":{\"name\":\"Borrower1\",\"maxX-books\":1}},{\"title\":\"Title2\",\"author\":\"Author2\",\"maybe-borrower\":null}]")
+(def json-string-borrowers-bad "[{\"name\"\"Borrower1\",\"max-books\":1},{\"name\":\"Borrower2\",\"max-books\":2}]")
+(def json-string-borrowers "[{\"max-books\":2, \"name\":\"Borrower2\"},{\"name\":\"Borrower1\",\"max-books\":1}]")
+(def json-string-books "[{\"title\":\"Title1\",\"author\":\"Author1\",\"maybe-borrower\":{\"name\":\"Borrower1\",\"max-books\":1}},{\"title\":\"Title2\",\"author\":\"Author2\",\"maybe-borrower\":null}]")
 
 (deftest add-borrower-pass-test
   (is (= brs2

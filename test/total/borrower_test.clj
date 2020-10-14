@@ -13,23 +13,23 @@
 (s/conform ::br/name
            (br/get-name br1))
 
-(deftest get-maxX-books-test
+(deftest get-max-books-test
   (is (= 1
-         (br/get-maxX-books br1))))
-(s/conform ::br/maxX-books
-           (br/get-maxX-books br1))
+         (br/get-max-books br1))))
+(s/conform ::br/max-books
+           (br/get-max-books br1))
 
 (deftest set-name-test
-  (is (= {::br/name "Jack", ::br/maxX-books 1}
+  (is (= {::br/name "Jack", ::br/max-books 1}
          (br/set-name br1 "Jack"))))
 (s/conform ::br/borrower
            (br/set-name br1 "Jack"))
 
-(deftest set-maxX-books-test
-  (is (= {::br/name "Borrower1", ::br/maxX-books 11}
-         (br/set-maxX-books br1 11))))
+(deftest set-max-books-test
+  (is (= {::br/name "Borrower1", ::br/max-books 11}
+         (br/set-max-books br1 11))))
 (s/conform ::br/borrower
-           (br/set-maxX-books br1 11))
+           (br/set-max-books br1 11))
 
 (deftest borrower-to-string-test
   (is (= "Borrower1 (1 books)"

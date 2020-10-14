@@ -13,8 +13,8 @@
 (s/def ::extract-fn-bk-title
   (s/fspec :args (s/cat :book ::bk/book)
            :ret ::bk/title))
-(def br-fields {"name" ::br/name, "maxX-books" ::br/maxX-books})
-(def bk-fields {"title" ::bk/title, "author" ::bk/author, "maybe-borrower" ::bk/maybe-borrower, "name" ::br/name, "maxX-books" ::br/maxX-books})
+(def br-fields {"name" ::br/name, "max-books" ::br/max-books})
+(def bk-fields {"title" ::bk/title, "author" ::bk/author, "maybe-borrower" ::bk/maybe-borrower, "name" ::br/name, "max-books" ::br/max-books})
 
 (defn add-item [x xs]
   (if (some #{x} xs)
@@ -72,9 +72,9 @@
   :args (s/cat :borrower ::br/borrower :books ::bks)
   :ret int?)
 
-(defn- not-maxXed-out? [borrower books]
-  (< (num-books-out borrower books) (br/get-maxX-books borrower)))
-(s/fdef not-maxXed-out?
+(defn- not-maxed-out? [borrower books]
+  (< (num-books-out borrower books) (br/get-max-books borrower)))
+(s/fdef not-maxed-out?
   :args (s/cat :borrower ::br/borrower :books ::bks)
   :ret boolean?)
 
@@ -94,7 +94,7 @@
   (let [mbk (find-item title books bk/get-title)
         mbr (find-item name borrowers br/get-name)]
     (if (and (not= mbk nil) (not= mbr nil)
-             (not-maxXed-out? mbr books) (book-not-out? mbk))
+             (not-maxed-out? mbr books) (book-not-out? mbk))
       (let [new-book (bk/set-borrower mbk mbr)
             fewer-books (remove-book mbk books)]
         (add-item new-book fewer-books))
