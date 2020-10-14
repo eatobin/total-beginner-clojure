@@ -1,7 +1,7 @@
-(ns total.book-test
+(ns eatobin.total.book-test
   (:require [clojure.test :refer [deftest is]]
-            [total.borrower :as br]
-            [total.book :as bk]
+            [eatobin.total.borrower :as br]
+            [eatobin.total.book :as bk]
             [clojure.spec.alpha :as s]))
 
 (def br2 {::br/name "Borrower2" ::br/maxX-books 2})

@@ -1,5 +1,5 @@
-(ns total.book
-  (:require [total.borrower :as br]
+(ns eatobin.total.book
+  (:require [eatobin.total.borrower :as br]
             [clojure.spec.alpha :as s]
             [orchestra.spec.test :as ostest]))
 

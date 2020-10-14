@@ -1,6 +1,6 @@
-(ns total.library
-  (:require [total.borrower :as br]
-            [total.book :as bk]
+(ns eatobin.total.library
+  (:require [eatobin.total.borrower :as br]
+            [eatobin.total.book :as bk]
             [cheshire.core :as json]
             [clojure.spec.alpha :as s]
             [orchestra.spec.test :as ostest]))
