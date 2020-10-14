@@ -1,0 +1,1 @@
+(ns eatobin.total.domain)
