@@ -1,49 +1,46 @@
 (ns total.borrower
   (:require
-   [clojure.spec.alpha :as s]
-   [orchestra.spec.test :as ostest]))
-
-(s/def ::name string?)
-(s/def ::max-books (s/and int? #(>= % 0)))
-(s/def ::borrower (s/keys :req [::name ::max-books]))
+    [total.domain :as dom]
+    [clojure.spec.alpha :as s]
+    [orchestra.spec.test :as ostest]))
 
 (defn make-borrower [name max-books]
-  {::name name, ::max-books max-books})
+  {::dom/name name, ::dom/max-books max-books})
 (s/fdef make-borrower
-  :args (s/cat :name ::name
-               :max-books ::max-books)
-  :ret ::borrower)
+        :args (s/cat :name ::dom/name
+                     :max-books ::dom/max-books)
+        :ret ::dom/borrower)
 
 (defn get-name [borrower]
-  (borrower ::name))
+  (borrower ::dom/name))
 (s/fdef get-name
-  :args (s/cat :borrower ::borrower)
-  :ret ::name)
+        :args (s/cat :borrower ::dom/borrower)
+        :ret ::dom/name)
 
 (defn set-name [borrower name]
-  (assoc borrower ::name name))
+  (assoc borrower ::dom/name name))
 (s/fdef set-name
-  :args (s/cat :borrower ::borrower
-               :name ::name)
-  :ret ::borrower)
+        :args (s/cat :borrower ::dom/borrower
+                     :name ::dom/name)
+        :ret ::dom/borrower)
 
 (defn get-max-books [borrower]
-  (borrower ::max-books))
+  (borrower ::dom/max-books))
 (s/fdef get-max-books
-  :args (s/cat :borrower ::borrower)
-  :ret ::max-books)
+        :args (s/cat :borrower ::dom/borrower)
+        :ret ::dom/max-books)
 
 (defn set-max-books [borrower max-books]
-  (assoc borrower ::max-books max-books))
+  (assoc borrower ::dom/max-books max-books))
 (s/fdef set-max-books
-  :args (s/cat :borrower ::borrower
-               :max-books ::max-books)
-  :ret ::borrower)
+        :args (s/cat :borrower ::dom/borrower
+                     :max-books ::dom/max-books)
+        :ret ::dom/borrower)
 
 (defn borrower-to-string [borrower]
   (str (get-name borrower) " (" (get-max-books borrower) " books)"))
 (s/fdef borrower-to-string
-  :args (s/cat :borrower ::borrower)
-  :ret string?)
+        :args (s/cat :borrower ::dom/borrower)
+        :ret string?)
 
 (ostest/instrument)
