@@ -1,9 +1,9 @@
-(ns eatobin.total.library-test
+(ns total.library-test
   (:require [clojure.test :refer [deftest is]]
-            [eatobin.total.borrower :as br]
-            [eatobin.total.book :as bk]
-            [eatobin.total.library :as lib]
-            [eatobin.total.total :as mn]
+            [total.borrower :as br]
+            [total.book :as bk]
+            [total.library :as lib]
+            [total.total :as mn]
             [clojure.spec.alpha :as s]))
 
 (def br1 {::br/name "Borrower1" ::br/maxX-books 1})

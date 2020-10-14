@@ -1,9 +1,9 @@
 ;clojure -M:eat/orchestra:eat/test -m total.total
 
-(ns eatobin.total.total
-  (:require [eatobin.total.borrower :as br]
-            [eatobin.total.book :as bk]
-            [eatobin.total.library :as lib]
+(ns total.total
+  (:require [total.borrower :as br]
+            [total.book :as bk]
+            [total.library :as lib]
             [clojure.java.io :as io]
             [clojure.spec.alpha :as s]
             [orchestra.spec.test :as ostest])
