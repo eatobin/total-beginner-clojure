@@ -1,0 +1,1 @@
+clojure -X:eat/new :template app :name total/total
