@@ -5,16 +5,16 @@
             [clojure.spec.alpha :as s]
             [orchestra.spec.test :as ostest]))
 
-(s/def ::brs (s/coll-of ::br/borrower :kind list?))
-(s/def ::bks (s/coll-of ::bk/book :kind list?))
+(s/def ::brs (s/coll-of ::dom/borrower :kind list?))
+(s/def ::bks (s/coll-of ::dom/book :kind list?))
 (s/def ::extract-fn-br-name
-  (s/fspec :args (s/cat :borrower ::br/borrower)
-           :ret ::br/name))
+  (s/fspec :args (s/cat :borrower ::dom/borrower)
+           :ret ::dom/name))
 (s/def ::extract-fn-bk-title
-  (s/fspec :args (s/cat :book ::bk/book)
-           :ret ::bk/title))
-(def br-fields {"name" ::br/name, "max-books" ::br/max-books})
-(def bk-fields {"title" ::bk/title, "author" ::bk/author, "maybe-borrower" ::bk/maybe-borrower, "name" ::br/name, "max-books" ::br/max-books})
+  (s/fspec :args (s/cat :book ::dom/book)
+           :ret ::dom/title))
+(def br-fields {"name" ::dom/name, "max-books" ::dom/max-books})
+(def bk-fields {"title" ::dom/title, "author" ::dom/author, "maybe-borrower" ::dom/maybe-borrower, "name" ::dom/name, "max-books" ::dom/max-books})
 
 (defn add-item [x xs]
   (if (some #{x} xs)
@@ -22,15 +22,15 @@
     (into () (cons x xs))))
 (s/fdef add-item
   :args (s/or
-         :is-brs (s/cat :x ::br/borrower :xs ::brs)
-         :is-bks (s/cat :x ::bk/book :xs ::bks))
+         :is-brs (s/cat :x ::dom/borrower :xs ::brs)
+         :is-bks (s/cat :x ::dom/book :xs ::bks))
   :ret (s/or :ret-brs ::brs
              :ret-bks ::bks))
 
 (defn remove-book [book books]
   (into () (filter #(not= book %) books)))
 (s/fdef remove-book
-  :args (s/cat :book ::bk/book :books ::bks)
+  :args (s/cat :book ::dom/book :books ::bks)
   :ret ::bks)
 
 ;(defn find-item [tgt coll f]
@@ -51,10 +51,10 @@
 (s/def bk/get-title ::extract-fn-bk-title)
 (s/fdef find-item
   :args (s/or
-         :is-brs (s/cat :target ::br/name :coll ::brs :func ::extract-fn-br-name)
-         :is-bks (s/cat :target ::bk/title :coll ::bks :func ::extract-fn-bk-title))
-  :ret (s/or :found-br ::br/borrower
-             :found-bk ::bk/book
+         :is-brs (s/cat :target ::dom/name :coll ::brs :func ::extract-fn-br-name)
+         :is-bks (s/cat :target ::dom/title :coll ::bks :func ::extract-fn-bk-title))
+  :ret (s/or :found-br ::dom/borrower
+             :found-bk ::dom/book
              :not-found nil?))
 
 (defn get-books-for-borrower [borrower books]
@@ -63,31 +63,31 @@
                  :when (= cb borrower)]
              bk)))
 (s/fdef get-books-for-borrower
-  :args (s/cat :borrower ::br/borrower :books ::bks)
+  :args (s/cat :borrower ::dom/borrower :books ::bks)
   :ret ::bks)
 
 (defn- num-books-out [borrower books]
   (count (get-books-for-borrower borrower books)))
 (s/fdef num-books-out
-  :args (s/cat :borrower ::br/borrower :books ::bks)
+  :args (s/cat :borrower ::dom/borrower :books ::bks)
   :ret int?)
 
 (defn- not-maxed-out? [borrower books]
   (< (num-books-out borrower books) (br/get-max-books borrower)))
 (s/fdef not-maxed-out?
-  :args (s/cat :borrower ::br/borrower :books ::bks)
+  :args (s/cat :borrower ::dom/borrower :books ::bks)
   :ret boolean?)
 
 (defn- book-not-out? [book]
   (nil? (bk/get-borrower book)))
 (s/fdef book-not-out?
-  :args (s/cat :book ::bk/book)
+  :args (s/cat :book ::dom/book)
   :ret boolean?)
 
 (defn- book-out? [book]
   (not (nil? (bk/get-borrower book))))
 (s/fdef book-out?
-  :args (s/cat :book ::bk/book)
+  :args (s/cat :book ::dom/book)
   :ret boolean?)
 
 (defn check-out [name title borrowers books]
@@ -100,8 +100,8 @@
         (add-item new-book fewer-books))
       books)))
 (s/fdef check-out
-  :args (s/cat :name ::br/name
-               :title ::bk/title
+  :args (s/cat :name ::dom/name
+               :title ::dom/title
                :borrowers ::brs
                :books ::bks)
   :ret ::bks)
@@ -114,7 +114,7 @@
         (add-item new-book fewer-books))
       books)))
 (s/fdef check-in
-  :args (s/cat :title ::bk/title :books ::bks)
+  :args (s/cat :title ::dom/title :books ::bks)
   :ret ::bks)
 
 (defn json-string-to-list [json-string fields]

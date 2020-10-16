@@ -50,26 +50,26 @@
 
 (sgen/generate (s/gen int?))
 
-(s/explain ::br/borrower {::br/name "me" ::br/max-books 4})
+(s/explain ::dom/borrower {::dom/name "me" ::dom/max-books 4})
 (s/exercise-fn `br/make-borrower)
 (stest/check `br/make-borrower)
 (stest/check `br/get-name)
 (stest/check `br/set-name)
 
-(s/explain ::bk/book
-           {::bk/title          "T"
-            ::bk/author         "a"
-            ::bk/maybe-borrower {::br/name      "Nn",
-                                 ::br/max-books 333}})
+(s/explain ::dom/book
+           {::dom/title          "T"
+            ::dom/author         "a"
+            ::dom/maybe-borrower {::dom/name      "Nn",
+                                 ::dom/max-books 333}})
 (s/exercise-fn `bk/make-book)
 (stest/check `bk/make-book)
-(s/conform ::bk/book {::bk/title          "T"
-                      ::bk/author         "a"
-                      ::bk/maybe-borrower {::br/name      "Nn",
-                                           ::br/max-books 333}})
-(s/conform ::bk/book {::bk/title          "T"
-                      ::bk/author         "a"
-                      ::bk/maybe-borrower nil})
+(s/conform ::dom/book {::dom/title          "T"
+                      ::dom/author         "a"
+                      ::dom/maybe-borrower {::dom/name      "Nn",
+                                           ::dom/max-books 333}})
+(s/conform ::dom/book {::dom/title          "T"
+                      ::dom/author         "a"
+                      ::dom/maybe-borrower nil})
 
 (s/exercise-fn `lib/add-item)
 (stest/check `lib/add-item)
