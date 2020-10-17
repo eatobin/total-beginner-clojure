@@ -1,5 +1,6 @@
 (ns total.library
-  (:require [total.borrower :as br]
+  (:require [total.domain :as dom]
+            [total.borrower :as br]
             [total.book :as bk]
             [cheshire.core :as json]
             [clojure.spec.alpha :as s]
