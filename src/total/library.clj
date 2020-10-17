@@ -6,14 +6,6 @@
             [clojure.spec.alpha :as s]
             [orchestra.spec.test :as ostest]))
 
-(s/def ::brs (s/coll-of ::dom/borrower :kind list?))
-(s/def ::bks (s/coll-of ::dom/book :kind list?))
-(s/def ::extract-fn-br-name
-  (s/fspec :args (s/cat :borrower ::dom/borrower)
-           :ret ::dom/name))
-(s/def ::extract-fn-bk-title
-  (s/fspec :args (s/cat :book ::dom/book)
-           :ret ::dom/title))
 (def br-fields {"name" ::dom/name, "max-books" ::dom/max-books})
 (def bk-fields {"title" ::dom/title, "author" ::dom/author, "maybe-borrower" ::dom/maybe-borrower, "name" ::dom/name, "max-books" ::dom/max-books})
 
@@ -23,16 +15,16 @@
     (into () (cons x xs))))
 (s/fdef add-item
   :args (s/or
-         :is-brs (s/cat :x ::dom/borrower :xs ::brs)
-         :is-bks (s/cat :x ::dom/book :xs ::bks))
-  :ret (s/or :ret-brs ::brs
-             :ret-bks ::bks))
+         :is-brs (s/cat :x ::dom/borrower :xs ::dom/brs)
+         :is-bks (s/cat :x ::dom/book :xs ::dom/bks))
+  :ret (s/or :ret-brs ::dom/brs
+             :ret-bks ::dom/bks))
 
 (defn remove-book [book books]
   (into () (filter #(not= book %) books)))
 (s/fdef remove-book
-  :args (s/cat :book ::dom/book :books ::bks)
-  :ret ::bks)
+  :args (s/cat :book ::dom/book :books ::dom/bks)
+  :ret ::dom/bks)
 
 ;(defn find-item [tgt coll f]
 ;  (let [result (filter (fn [x] (= (f x) tgt)) coll)]
@@ -48,12 +40,12 @@
                      :when (= ct target)]
                  item)]
     (first result)))
-(s/def br/get-name ::extract-fn-br-name)
-(s/def bk/get-title ::extract-fn-bk-title)
+(s/def br/get-name ::dom/extract-fn-br-name)
+(s/def bk/get-title ::dom/extract-fn-bk-title)
 (s/fdef find-item
   :args (s/or
-         :is-brs (s/cat :target ::dom/name :coll ::brs :func ::extract-fn-br-name)
-         :is-bks (s/cat :target ::dom/title :coll ::bks :func ::extract-fn-bk-title))
+         :is-brs (s/cat :target ::dom/name :coll ::dom/brs :func ::dom/extract-fn-br-name)
+         :is-bks (s/cat :target ::dom/title :coll ::dom/bks :func ::dom/extract-fn-bk-title))
   :ret (s/or :found-br ::dom/borrower
              :found-bk ::dom/book
              :not-found nil?))
@@ -64,19 +56,19 @@
                  :when (= cb borrower)]
              bk)))
 (s/fdef get-books-for-borrower
-  :args (s/cat :borrower ::dom/borrower :books ::bks)
-  :ret ::bks)
+  :args (s/cat :borrower ::dom/borrower :books ::dom/bks)
+  :ret ::dom/bks)
 
 (defn- num-books-out [borrower books]
   (count (get-books-for-borrower borrower books)))
 (s/fdef num-books-out
-  :args (s/cat :borrower ::dom/borrower :books ::bks)
+  :args (s/cat :borrower ::dom/borrower :books ::dom/bks)
   :ret int?)
 
 (defn- not-maxed-out? [borrower books]
   (< (num-books-out borrower books) (br/get-max-books borrower)))
 (s/fdef not-maxed-out?
-  :args (s/cat :borrower ::dom/borrower :books ::bks)
+  :args (s/cat :borrower ::dom/borrower :books ::dom/bks)
   :ret boolean?)
 
 (defn- book-not-out? [book]
@@ -103,9 +95,9 @@
 (s/fdef check-out
   :args (s/cat :name ::dom/name
                :title ::dom/title
-               :borrowers ::brs
-               :books ::bks)
-  :ret ::bks)
+               :borrowers ::dom/brs
+               :books ::dom/bks)
+  :ret ::dom/bks)
 
 (defn check-in [title books]
   (let [mbk (find-item title books bk/get-title)]
@@ -115,8 +107,8 @@
         (add-item new-book fewer-books))
       books)))
 (s/fdef check-in
-  :args (s/cat :title ::dom/title :books ::bks)
-  :ret ::bks)
+  :args (s/cat :title ::dom/title :books ::dom/bks)
+  :ret ::dom/bks)
 
 (defn json-string-to-list [json-string fields]
   (if (= json-string "File read error")
@@ -128,15 +120,15 @@
         (into () json-str)))))
 (s/fdef json-string-to-list
   :args (s/cat :json-string string? :fields map?)
-  :ret (s/or :is-json-brs ::brs
-             :is-json-bks ::bks
+  :ret (s/or :is-json-brs ::dom/brs
+             :is-json-bks ::dom/bks
              :is-error string?))
 
 (defn collection-to-json-string [collection]
   (json/generate-string collection {:key-fn (fn [k] (name k))}))
 (s/fdef collection-to-json-string
-  :args (s/or :is-brs (s/cat :collection ::brs)
-              :is-bks (s/cat :collection ::bks))
+  :args (s/or :is-brs (s/cat :collection ::dom/brs)
+              :is-bks (s/cat :collection ::dom/bks))
   :ret string?)
 
 (defn library-to-string [books borrowers]
@@ -144,7 +136,7 @@
        (count books) " books; "
        (count borrowers) " borrowers."))
 (s/fdef library-to-string
-  :args (s/cat :books ::bks :borrowers ::brs)
+  :args (s/cat :books ::dom/bks :borrowers ::dom/brs)
   :ret string?)
 
 (defn status-to-string [books borrowers]
@@ -158,7 +150,7 @@
        "--- End of Status Report ---"
        "\n"))
 (s/fdef status-to-string
-  :args (s/cat :books ::bks :borrowers ::brs)
+  :args (s/cat :books ::dom/bks :borrowers ::dom/brs)
   :ret string?)
 
 (ostest/instrument)

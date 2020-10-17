@@ -1,5 +1,6 @@
 (ns total.specs
-  (:require [total.borrower :as br]
+  (:require [total.domain :as dom]
+            [total.borrower :as br]
             [total.book :as bk]
             [total.library :as lib]
             [total.total :as mn]
@@ -60,16 +61,16 @@
            {::dom/title          "T"
             ::dom/author         "a"
             ::dom/maybe-borrower {::dom/name      "Nn",
-                                 ::dom/max-books 333}})
+                                  ::dom/max-books 333}})
 (s/exercise-fn `bk/make-book)
 (stest/check `bk/make-book)
 (s/conform ::dom/book {::dom/title          "T"
-                      ::dom/author         "a"
-                      ::dom/maybe-borrower {::dom/name      "Nn",
-                                           ::dom/max-books 333}})
+                       ::dom/author         "a"
+                       ::dom/maybe-borrower {::dom/name      "Nn",
+                                             ::dom/max-books 333}})
 (s/conform ::dom/book {::dom/title          "T"
-                      ::dom/author         "a"
-                      ::dom/maybe-borrower nil})
+                       ::dom/author         "a"
+                       ::dom/maybe-borrower nil})
 
 (s/exercise-fn `lib/add-item)
 (stest/check `lib/add-item)
@@ -77,10 +78,10 @@
 (stest/check `lib/remove-book)
 (s/exercise-fn `lib/find-item)
 (stest/check `lib/find-item)
-(s/conform ::lib/extract-fn-br-name br/get-name)
-(s/explain ::lib/extract-fn-br-name br/get-name)
-(s/conform ::lib/extract-fn-bk-title bk/get-title)
-(s/explain ::lib/extract-fn-bk-title bk/get-title)
+(s/conform ::dom/extract-fn-br-name br/get-name)
+(s/explain ::dom/extract-fn-br-name br/get-name)
+(s/conform ::dom/extract-fn-bk-title bk/get-title)
+(s/explain ::dom/extract-fn-bk-title bk/get-title)
 (stest/check `lib/get-books-for-borrower)
 (s/exercise-fn `lib/get-books-for-borrower)
 (stest/check `lib/num-books-out)
