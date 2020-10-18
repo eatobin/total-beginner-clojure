@@ -41,11 +41,11 @@
   (reset! a-borrowers ())
   (print-status a-books a-borrowers))
 
-(def json-borrowers-file-before "borrowers-before.json")
-(def json-borrowers-file-after "borrowers-after.json")
-(def json-books-file "books-before.json")
-(def json-borrowers-file-bad "bad-borrowers.json")
-(def empty-file "empty.json")
+(def json-borrowers-file-before "resources/borrowers-before.json")
+(def json-borrowers-file-after "resources/borrowers-after.json")
+(def json-books-file "resources/books-before.json")
+(def json-borrowers-file-bad "resources/bad-borrowers.json")
+(def empty-file "resources/empty.json")
 
 (defn -main [& _]
   (let [a-borrowers (atom ())
