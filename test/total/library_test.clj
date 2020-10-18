@@ -4,7 +4,7 @@
             [total.borrower :as br]
             [total.book :as bk]
             [total.library :as lib]
-            [total.total :as mn]
+            [total.total :as tot]
             [clojure.spec.alpha :as s]))
 
 (def br1 {::dom/name "Borrower1" ::dom/max-books 1})
@@ -164,21 +164,21 @@
            (lib/check-in "NoTitle" bks1))
 
 (deftest read-file-pass
-  (let [s (mn/read-file-into-json-string "resources/empty.json")]
+  (let [s (tot/read-file-into-json-string "resources/empty.json")]
     (is (= '()
            (lib/json-string-to-list s lib/br-fields)))))
 (s/conform (s/or :is-json ::dom/brs
                  :is-error string?)
-           (let [s (mn/read-file-into-json-string "resources/empty.json")]
+           (let [s (tot/read-file-into-json-string "resources/empty.json")]
              (lib/json-string-to-list s lib/br-fields)))
 
 (deftest read-file-fail
-  (let [s (mn/read-file-into-json-string "no-file.json")]
+  (let [s (tot/read-file-into-json-string "no-file.json")]
     (is (= "File read error"
            (lib/json-string-to-list s lib/br-fields)))))
 (s/conform (s/or :is-json ::dom/brs
                  :is-error string?)
-           (let [s (mn/read-file-into-json-string "no-file.json")]
+           (let [s (tot/read-file-into-json-string "no-file.json")]
              (lib/json-string-to-list s lib/br-fields)))
 
 (deftest json-parse-fail-test
