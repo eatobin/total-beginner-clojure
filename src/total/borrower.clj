@@ -5,11 +5,11 @@
     [orchestra.spec.test :as ostest]))
 
 (defn make-borrower [name max-books]
-  {::dom/name name, ::dom/max-books max-books})
+  {:total.domain/name name, :total.domain/max-books max-books})
 (s/fdef make-borrower
-        :args (s/cat :name ::dom/name
-                     :max-books ::dom/max-books)
-        :ret ::dom/borrower)
+        :args (s/cat :name :total.domain/name
+                     :max-books :total.domain/max-books)
+        :ret :total.domain/borrower)
 
 (defn get-name [borrower]
   (borrower ::dom/name))
