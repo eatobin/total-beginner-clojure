@@ -2,10 +2,10 @@
   {
     "name"
     "Borrower100",
-    "maxX-books": 100
+    "max-books": 100
   },
   {
     "name": "Borrower200",
-    "maxX-books": 200
+    "max-books": 200
   }
 ]

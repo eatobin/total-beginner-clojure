@@ -164,46 +164,49 @@
            (lib/check-in "NoTitle" bks1))
 
 (deftest read-file-pass
-  (let [s (tot/read-file-into-json-string "resources/empty.json")]
-    (is (= '()
-           (lib/json-string-to-list s lib/br-fields)))))
+  (let [s (tot/read-file-into-json-string "resources/borrowers-before.json")]
+    (is (= '(#:total.domain{:max-books 200
+                            :name      "Borrower200"}
+              #:total.domain{:max-books 100
+                             :name      "Borrower100"})
+           (lib/json-string-to-list s dom/br-fields)))))
 (s/conform (s/or :is-json ::dom/brs
                  :is-error string?)
-           (let [s (tot/read-file-into-json-string "resources/empty.json")]
-             (lib/json-string-to-list s lib/br-fields)))
+           (let [s (tot/read-file-into-json-string "resources/borrowers-before.json")]
+             (lib/json-string-to-list s dom/br-fields)))
 
 (deftest read-file-fail
   (let [s (tot/read-file-into-json-string "no-file.json")]
     (is (= "File read error"
-           (lib/json-string-to-list s lib/br-fields)))))
+           (lib/json-string-to-list s dom/br-fields)))))
 (s/conform (s/or :is-json ::dom/brs
                  :is-error string?)
            (let [s (tot/read-file-into-json-string "no-file.json")]
-             (lib/json-string-to-list s lib/br-fields)))
+             (lib/json-string-to-list s dom/br-fields)))
 
 (deftest json-parse-fail-test
   (is (= "JSON parse error"
-         (lib/json-string-to-list json-string-borrowers-bad lib/br-fields))))
+         (lib/json-string-to-list json-string-borrowers-bad dom/br-fields))))
 (s/conform (s/or :is-json-brs ::dom/brs
                  :is-json-bks ::dom/bks
                  :is-error string?)
-           (lib/json-string-to-list json-string-borrowers-bad lib/br-fields))
+           (lib/json-string-to-list json-string-borrowers-bad dom/br-fields))
 
 (deftest json-parse-pass-brs-test
   (is (= brs1
-         (lib/json-string-to-list json-string-borrowers lib/br-fields))))
+         (lib/json-string-to-list json-string-borrowers dom/br-fields))))
 (s/conform (s/or :is-json-brs ::dom/brs
                  :is-json-bks ::dom/bks
                  :is-error string?)
-           (lib/json-string-to-list json-string-borrowers lib/br-fields))
+           (lib/json-string-to-list json-string-borrowers dom/br-fields))
 
 (deftest json-parse-pass-bks-test
   (is (= bks1
-         (lib/json-string-to-list json-string-books lib/bk-fields))))
+         (lib/json-string-to-list json-string-books dom/bk-fields))))
 (s/conform (s/or :is-json-brs ::dom/brs
                  :is-json-bks ::dom/bks
                  :is-error string?)
-           (lib/json-string-to-list json-string-books lib/bk-fields))
+           (lib/json-string-to-list json-string-books dom/bk-fields))
 
 (deftest collection-to-json-string-test
   (is (= json-string-books

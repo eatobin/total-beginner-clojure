@@ -6,9 +6,6 @@
             [clojure.spec.alpha :as s]
             [orchestra.spec.test :as ostest]))
 
-(def br-fields {"name" ::dom/name, "max-books" ::dom/max-books})
-(def bk-fields {"title" ::dom/title, "author" ::dom/author, "maybe-borrower" ::dom/maybe-borrower, "name" ::dom/name, "max-books" ::dom/max-books})
-
 (defn add-item [x xs]
   (if (some #{x} xs)
     xs

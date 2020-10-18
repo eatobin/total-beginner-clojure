@@ -19,3 +19,5 @@
 (s/def ::extract-fn-bk-title
   (s/fspec :args (s/cat :book ::book)
            :ret ::title))
+(def br-fields {"name" ::name, "max-books" ::max-books})
+(def bk-fields {"title" ::title, "author" ::author, "maybe-borrower" ::maybe-borrower, "name" ::name, "max-books" ::max-books})

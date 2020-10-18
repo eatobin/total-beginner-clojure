@@ -1,7 +1,8 @@
 ;clojure -M:eat/orchestra:eat/test -m total.total
 
 (ns total.total
-  (:require [total.borrower :as br]
+  (:require [total.domain :as dom]
+            [total.borrower :as br]
             [total.book :as bk]
             [total.library :as lib]
             [clojure.java.io :as io]
@@ -26,8 +27,8 @@
 (defn new-a [a-books a-borrowers brs-file bks-file]
   (let [json-brs-str (read-file-into-json-string brs-file)
         json-bks-str (read-file-into-json-string bks-file)
-        brs (lib/json-string-to-list json-brs-str lib/br-fields)
-        bks (lib/json-string-to-list json-bks-str lib/bk-fields)]
+        brs (lib/json-string-to-list json-brs-str dom/br-fields)
+        bks (lib/json-string-to-list json-bks-str dom/bk-fields)]
     (if (or (= brs "File read error") (= brs "JSON parse error"))
       (println (str "\n" brs))
       (reset! a-borrowers brs))
