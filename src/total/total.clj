@@ -8,18 +8,21 @@
             [clojure.java.io :as io]
             [clojure.spec.alpha :as s]
             [orchestra.spec.test :as ostest])
+  (:import (java.io FileNotFoundException))
   (:gen-class))
 
 (defn print-status [a-books a-borrowers]
   (println (lib/status-to-string (deref a-books) (deref a-borrowers))))
 
 (defn read-file-into-json-string [file]
-  (if (.exists (io/file file))
-    (slurp file)
-    "File read error"))
+  (try
+    [nil (slurp file)]
+    (catch FileNotFoundException e
+      [(str "caught file exception: " (.getMessage e)) nil])))
 (s/fdef read-file-into-json-string
         :args (s/cat :file string?)
-        :ret string?)
+        :ret (s/or :success (s/tuple nil? string?)
+                   :failure (s/tuple string? nil?)))
 
 (defn write-file-from-json-string [string file]
   (spit file string))
