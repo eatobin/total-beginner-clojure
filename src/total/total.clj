@@ -23,6 +23,12 @@
         :args (s/cat :file string?)
         :ret (s/or :success (s/tuple nil? string?)
                    :failure (s/tuple string? nil?)))
+(s/conform (s/or :success (s/tuple nil? string?)
+                 :failure (s/tuple string? nil?))
+           (read-file-into-json-string "resources/borrowers-before.json"))
+(s/conform (s/or :success (s/tuple nil? string?)
+                 :failure (s/tuple string? nil?))
+           (read-file-into-json-string "resources/borrowers-beforeX.json"))
 
 (defn write-file-from-json-string [string file]
   (spit file string))
