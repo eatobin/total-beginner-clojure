@@ -121,6 +121,21 @@
              :is-json-bks ::dom/bks
              :is-error string?))
 
+
+;(defn Example []
+;  (try
+;    (def string1 (slurp "Example.txt"))
+;    (println string1)
+;
+;    (catch java.io.FileNotFoundException e (println (str "caught file
+;         exception: " (.getMessage e))))
+;
+;    (catch Exception e (println (str "caught exception: " (.getMessage e)))))
+;  (println "Let's move on"))
+
+
+
+
 (defn collection-to-json-string [collection]
   (json/generate-string collection {:key-fn (fn [k] (name k))}))
 (s/fdef collection-to-json-string
