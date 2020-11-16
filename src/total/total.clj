@@ -1,5 +1,3 @@
-;clojure -M:eat/orchestra:eat/test -m total.total
-
 (ns total.total
   (:require [total.domain :as dom]
             [total.borrower :as br]
@@ -8,27 +6,26 @@
             [clojure.java.io :as io]
             [clojure.spec.alpha :as s]
             [orchestra.spec.test :as ostest])
-  (:import (java.io FileNotFoundException))
   (:gen-class))
 
 (defn print-status [a-books a-borrowers]
   (println (lib/status-to-string (deref a-books) (deref a-borrowers))))
 
-(defn read-file-into-json-string [file]
+(defn read-file-into-json-string [file-path]
   (try
-    [nil (slurp file)]
-    (catch FileNotFoundException e
-      [(str "caught file exception: " (.getMessage e)) nil])))
+    [nil (slurp file-path)]
+    (catch Exception e
+      [(str (.getMessage e)) nil])))
 (s/fdef read-file-into-json-string
-        :args (s/cat :file string?)
+        :args (s/cat :file-path string?)
         :ret (s/or :success (s/tuple nil? string?)
                    :failure (s/tuple string? nil?)))
 (s/conform (s/or :success (s/tuple nil? string?)
                  :failure (s/tuple string? nil?))
-           (read-file-into-json-string "resources/borrowers-before.json"))
+           (read-file-into-json-string "resources-test/beatles.json"))
 (s/conform (s/or :success (s/tuple nil? string?)
                  :failure (s/tuple string? nil?))
-           (read-file-into-json-string "resources/borrowers-beforeX.json"))
+           (read-file-into-json-string "nope.json"))
 
 (defn write-file-from-json-string [string file]
   (spit file string))
