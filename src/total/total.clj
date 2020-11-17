@@ -33,8 +33,8 @@
 (defn new-a [a-books a-borrowers brs-file bks-file]
   (let [json-brs-str-maybe (read-file-into-json-string brs-file)
         json-bks-str-maybe (read-file-into-json-string bks-file)
-        brs (lib/json-string-to-list json-brs-str-maybe dom/br-fields)
-        bks (lib/json-string-to-list json-bks-str-maybe dom/bk-fields)]
+        brs (lib/json-string-to-list json-brs-str-maybe)
+        bks (lib/json-string-to-list json-bks-str-maybe)]
     (if (or (= brs "File read error") (= brs "JSON parse error"))
       (println (str "\n" brs))
       (reset! a-borrowers brs))
