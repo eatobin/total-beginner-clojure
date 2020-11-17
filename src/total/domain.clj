@@ -11,8 +11,8 @@
 (s/def ::maybe-borrower (s/or :just :unq/borrower :nothing nil?))
 (s/def :unq/book (s/keys :req-un [::title ::author ::maybe-borrower]))
 
-(s/def ::brs (s/coll-of :unq/borrower :kind list?))
-(s/def ::bks (s/coll-of :unq/book :kind list?))
+(s/def :unq/brs (s/coll-of :unq/borrower :kind list?))
+(s/def :unq/bks (s/coll-of :unq/book :kind list?))
 (s/def ::extract-fn-br-name
   (s/fspec :args (s/cat :borrower :unq/borrower)
            :ret ::name))

@@ -9,38 +9,38 @@
 (s/fdef make-borrower
         :args (s/cat :name :total.domain/name
                      :max-books :total.domain/max-books)
-        :ret :total.domain/borrower)
+        :ret :unq/borrower)
 
 (defn get-name [borrower]
-  (borrower ::dom/name))
+  (::dom/name borrower))
 (s/fdef get-name
-        :args (s/cat :borrower ::dom/borrower)
+        :args (s/cat :borrower :unq/borrower)
         :ret ::dom/name)
 
 (defn set-name [borrower name]
   (assoc borrower ::dom/name name))
 (s/fdef set-name
-        :args (s/cat :borrower ::dom/borrower
+        :args (s/cat :borrower :unq/borrower
                      :name ::dom/name)
-        :ret ::dom/borrower)
+        :ret :unq/borrower)
 
 (defn get-max-books [borrower]
-  (borrower ::dom/max-books))
+  (::dom/max-books borrower))
 (s/fdef get-max-books
-        :args (s/cat :borrower ::dom/borrower)
+        :args (s/cat :borrower :unq/borrower)
         :ret ::dom/max-books)
 
 (defn set-max-books [borrower max-books]
   (assoc borrower ::dom/max-books max-books))
 (s/fdef set-max-books
-        :args (s/cat :borrower ::dom/borrower
+        :args (s/cat :borrower :unq/borrower
                      :max-books ::dom/max-books)
-        :ret ::dom/borrower)
+        :ret :unq/borrower)
 
 (defn borrower-to-string [borrower]
   (str (get-name borrower) " (" (get-max-books borrower) " books)"))
 (s/fdef borrower-to-string
-        :args (s/cat :borrower ::dom/borrower)
+        :args (s/cat :borrower :unq/borrower)
         :ret string?)
 
 (ostest/instrument)
