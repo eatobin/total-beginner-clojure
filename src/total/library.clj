@@ -2,7 +2,7 @@
   (:require [total.domain :as dom]
             [total.borrower :as br]
             [total.book :as bk]
-            [cheshire.core :as json]
+            [clojure.data.json :as json]
             [clojure.spec.alpha :as s]
             [orchestra.spec.test :as ostest]))
 
@@ -106,6 +106,25 @@
 (s/fdef check-in
   :args (s/cat :title ::dom/title :books ::dom/bks)
   :ret ::dom/bks)
+
+
+(defn json-string-to-list
+  [[error-string json-string]]
+  (if (nil? error-string)
+    (try
+      [nil (json/read-str json-string
+                          :key-fn keyword)]
+      (catch Exception e
+        [(str (.getMessage e)) nil]))
+    [error-string nil]))
+(s/fdef roster-json-string-to-Roster
+        :args (s/cat :input (s/or :success-in (s/tuple nil? string?)
+                                  :failure-in (s/tuple string? nil?)))
+        :ret (s/or :success-out (s/tuple nil? :unq/roster)
+                   :failure-out (s/tuple string? nil?)))
+
+
+
 
 (defn json-string-to-list [json-string fields]
   (if (= json-string "File read error")
