@@ -5,7 +5,7 @@
             [clojure.spec.alpha :as s]))
 
 (def br1 (br/make-borrower "Borrower1" 1))
-(s/conform ::dom/borrower
+(s/conform :unq/borrower
            (br/make-borrower "Borrower1" 1))
 
 (deftest get-name-test
@@ -21,15 +21,15 @@
            (br/get-max-books br1))
 
 (deftest set-name-test
-  (is (= {::dom/name "Jack", ::dom/max-books 1}
+  (is (= {:name "Jack", :max-books 1}
          (br/set-name br1 "Jack"))))
-(s/conform ::dom/borrower
+(s/conform :unq/borrower
            (br/set-name br1 "Jack"))
 
 (deftest set-max-books-test
-  (is (= {::dom/name "Borrower1", ::dom/max-books 11}
+  (is (= {:name "Borrower1", :max-books 11}
          (br/set-max-books br1 11))))
-(s/conform ::dom/borrower
+(s/conform :unq/borrower
            (br/set-max-books br1 11))
 
 (deftest borrower-to-string-test

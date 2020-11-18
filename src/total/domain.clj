@@ -5,7 +5,6 @@
 (s/def ::max-books (s/and int? #(>= % 0)))
 (s/def :unq/borrower (s/keys :req-un [::name ::max-books]))
 
-
 (s/def ::title string?)
 (s/def ::author string?)
 (s/def ::maybe-borrower (s/or :just :unq/borrower :nothing nil?))
