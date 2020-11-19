@@ -12,15 +12,15 @@
     (into () (cons x xs))))
 (s/fdef add-item
         :args (s/or
-                :is-brs (s/cat :x ::dom/borrower :xs ::dom/brs)
-                :is-bks (s/cat :x ::dom/book :xs ::dom/bks))
+                :is-brs (s/cat :x :unq/borrower :xs ::dom/brs)
+                :is-bks (s/cat :x :unq/book :xs ::dom/bks))
         :ret (s/or :ret-brs ::dom/brs
                    :ret-bks ::dom/bks))
 
 (defn remove-book [book books]
   (into () (filter #(not= book %) books)))
 (s/fdef remove-book
-        :args (s/cat :book ::dom/book :books ::dom/bks)
+        :args (s/cat :book :unq/book :books ::dom/bks)
         :ret ::dom/bks)
 
 ;(defn find-item [tgt coll f]
@@ -43,8 +43,8 @@
         :args (s/or
                 :is-brs (s/cat :target ::dom/name :coll ::dom/brs :func ::dom/extract-fn-br-name)
                 :is-bks (s/cat :target ::dom/title :coll ::dom/bks :func ::dom/extract-fn-bk-title))
-        :ret (s/or :found-br ::dom/borrower
-                   :found-bk ::dom/book
+        :ret (s/or :found-br :unq/borrower
+                   :found-bk :unq/book
                    :not-found nil?))
 
 (defn get-books-for-borrower [borrower books]
@@ -53,31 +53,31 @@
                  :when (= cb borrower)]
              bk)))
 (s/fdef get-books-for-borrower
-        :args (s/cat :borrower ::dom/borrower :books ::dom/bks)
+        :args (s/cat :borrower :unq/borrower :books ::dom/bks)
         :ret ::dom/bks)
 
 (defn- num-books-out [borrower books]
   (count (get-books-for-borrower borrower books)))
 (s/fdef num-books-out
-        :args (s/cat :borrower ::dom/borrower :books ::dom/bks)
+        :args (s/cat :borrower :unq/borrower :books ::dom/bks)
         :ret int?)
 
 (defn- not-maxed-out? [borrower books]
   (< (num-books-out borrower books) (br/get-max-books borrower)))
 (s/fdef not-maxed-out?
-        :args (s/cat :borrower ::dom/borrower :books ::dom/bks)
+        :args (s/cat :borrower :unq/borrower :books ::dom/bks)
         :ret boolean?)
 
 (defn- book-not-out? [book]
   (nil? (bk/get-borrower book)))
 (s/fdef book-not-out?
-        :args (s/cat :book ::dom/book)
+        :args (s/cat :book :unq/book)
         :ret boolean?)
 
 (defn- book-out? [book]
   (not (nil? (bk/get-borrower book))))
 (s/fdef book-out?
-        :args (s/cat :book ::dom/book)
+        :args (s/cat :book :unq/book)
         :ret boolean?)
 
 (defn check-out [name title borrowers books]

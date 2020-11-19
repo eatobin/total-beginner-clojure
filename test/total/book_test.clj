@@ -4,13 +4,13 @@
             [total.book :as bk]
             [clojure.spec.alpha :as s]))
 
-(def br2 {::dom/name "Borrower2" ::dom/max-books 2})
+(def br2 {:name "Borrower2" :max-books 2})
 (def bk1 (bk/make-book "Title1" "Author1"))
 (def bk2 (bk/set-borrower bk1 br2))
 
-(s/conform ::dom/book
+(s/conform :unq/book
            (bk/make-book "Title1" "Author1"))
-(s/conform ::dom/book
+(s/conform :unq/book
            (bk/make-book "Title1" "Author1" br2))
 
 (s/conform (s/cat :title ::dom/title

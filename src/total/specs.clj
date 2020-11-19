@@ -51,24 +51,24 @@
 
 (sgen/generate (s/gen int?))
 
-(s/explain ::dom/borrower {::dom/name "me" ::dom/max-books 4})
+(s/explain :unq/borrower {::dom/name "me" ::dom/max-books 4})
 (s/exercise-fn `br/make-borrower)
 (stest/check `br/make-borrower)
 (stest/check `br/get-name)
 (stest/check `br/set-name)
 
-(s/explain ::dom/book
+(s/explain :unq/book
            {::dom/title          "T"
             ::dom/author         "a"
             ::dom/maybe-borrower {::dom/name      "Nn",
                                   ::dom/max-books 333}})
 (s/exercise-fn `bk/make-book)
 (stest/check `bk/make-book)
-(s/conform ::dom/book {::dom/title          "T"
+(s/conform :unq/book {::dom/title          "T"
                        ::dom/author         "a"
                        ::dom/maybe-borrower {::dom/name      "Nn",
                                              ::dom/max-books 333}})
-(s/conform ::dom/book {::dom/title          "T"
+(s/conform :unq/book {::dom/title          "T"
                        ::dom/author         "a"
                        ::dom/maybe-borrower nil})
 

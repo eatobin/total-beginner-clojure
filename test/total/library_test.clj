@@ -68,32 +68,32 @@
 (deftest find-book-pass-test
   (is (= bk1
          (lib/find-item "Title1" bks2 bk/get-title))))
-(s/conform (s/or :found-br ::dom/borrower
-                 :found-bk ::dom/book
+(s/conform (s/or :found-br :unq/borrower
+                 :found-bk :unq/book
                  :not-found nil?)
            (lib/find-item "Title1" bks2 bk/get-title))
 
 (deftest find-book-fail-test
   (is (= nil
          (lib/find-item "Title11" bks2 bk/get-title))))
-(s/conform (s/or :found-br ::dom/borrower
-                 :found-bk ::dom/book
+(s/conform (s/or :found-br :unq/borrower
+                 :found-bk :unq/book
                  :not-found nil?)
            (lib/find-item "Title11" bks2 bk/get-title))
 
 (deftest find-borrower-pass-test
   (is (= br1
          (lib/find-item "Borrower1" brs2 br/get-name))))
-(s/conform (s/or :found-br ::dom/borrower
-                 :found-bk ::dom/book
+(s/conform (s/or :found-br :unq/borrower
+                 :found-bk :unq/book
                  :not-found nil?)
            (lib/find-item "Borrower1" brs2 br/get-name))
 
 (deftest find-borrower-fail-test
   (is (= nil
          (lib/find-item "Borrower11" brs1 br/get-name))))
-(s/conform (s/or :found-br ::dom/borrower
-                 :found-bk ::dom/book
+(s/conform (s/or :found-br :unq/borrower
+                 :found-bk :unq/book
                  :not-found nil?)
            (lib/find-item "Borrower11" brs1 br/get-name))
 

@@ -6,37 +6,37 @@
 
 (defn make-book
   ([title author] (make-book title author nil))
-  ([title author m-borrower] {::dom/title title, ::dom/author author, ::dom/maybe-borrower m-borrower}))
+  ([title author m-borrower] {:title title, :author author, :maybe-borrower m-borrower}))
 (s/fdef make-book
         :args (s/cat :title ::dom/title
                      :author ::dom/author
                      :borrower (s/? ::dom/maybe-borrower))
-        :ret ::dom/book)
+        :ret :unq/book)
 
 (defn get-title [book]
-  (book ::dom/title))
+  (:title book))
 (s/fdef get-title
-        :args (s/cat :book ::dom/book)
+        :args (s/cat :book :unq/book)
         :ret ::dom/title)
 
 (defn get-author [book]
-  (book ::dom/author))
+  (:author book))
 (s/fdef get-author
-        :args (s/cat :book ::dom/book)
+        :args (s/cat :book :unq/book)
         :ret ::dom/author)
 
 (defn get-borrower [book]
-  (book ::dom/maybe-borrower))
+  (:maybe-borrower book))
 (s/fdef get-borrower
-        :args (s/cat :book ::dom/book)
+        :args (s/cat :book :unq/book)
         :ret ::dom/maybe-borrower)
 
 (defn set-borrower [book borrower]
-  (assoc book ::dom/maybe-borrower borrower))
+  (assoc book :maybe-borrower borrower))
 (s/fdef set-borrower
-        :args (s/cat :book ::dom/book
+        :args (s/cat :book :unq/book
                      :borrower ::dom/maybe-borrower)
-        :ret ::dom/book)
+        :ret :unq/book)
 
 (defn- available-string [book]
   (let [borrower (get-borrower book)]
@@ -46,7 +46,7 @@
         "Checked out to "
         (br/get-name borrower)))))
 (s/fdef available-string
-        :args (s/cat :book ::dom/book)
+        :args (s/cat :book :unq/book)
         :ret string?)
 
 (defn book-to-string [book]
@@ -57,7 +57,7 @@
     "; "
     (available-string book)))
 (s/fdef book-to-string
-        :args (s/cat :book ::dom/book)
+        :args (s/cat :book :unq/book)
         :ret string?)
 
 (ostest/instrument)
