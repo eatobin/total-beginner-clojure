@@ -13,9 +13,8 @@
 
 (defn get-name [borrower]
   (:name borrower))
-(s/fdef get-name
-        :args (s/cat :borrower :unq/borrower)
-        :ret ::dom/name)
+(s/def get-name
+  ::dom/extract-fn-br-name)
 
 (defn set-name [borrower name]
   (assoc borrower :name name))

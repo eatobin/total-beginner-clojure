@@ -15,9 +15,8 @@
 
 (defn get-title [book]
   (:title book))
-(s/fdef get-title
-        :args (s/cat :book :unq/book)
-        :ret ::dom/title)
+(s/def get-title
+  ::dom/extract-fn-bk-title)
 
 (defn get-author [book]
   (:author book))
