@@ -1,6 +1,5 @@
 (ns total.total
-  (:require [total.domain :as dom]
-            [total.borrower :as br]
+  (:require [total.borrower :as br]
             [total.book :as bk]
             [total.library :as lib]
             [clojure.java.io :as io]
@@ -33,14 +32,14 @@
 (defn new-a [a-books a-borrowers brs-file bks-file]
   (let [json-brs-str-maybe (read-file-into-json-string brs-file)
         json-bks-str-maybe (read-file-into-json-string bks-file)
-        brs (lib/json-string-to-list json-brs-str-maybe)
-        bks (lib/json-string-to-list json-bks-str-maybe)]
-    (if (or (= brs "File read error") (= brs "JSON parse error"))
-      (println (str "\n" brs))
-      (reset! a-borrowers brs))
-    (if (or (= bks "File read error") (= bks "JSON parse error"))
-      (println (str "\n" bks))
-      (reset! a-books bks))
+        brs-maybe (lib/json-string-to-list json-brs-str-maybe)
+        bks-maybe (lib/json-string-to-list json-bks-str-maybe)]
+    (if (nil? (last brs-maybe))
+      (println (str "\n" (first brs-maybe)))
+      (reset! a-borrowers (last brs-maybe)))
+    (if (nil? (last bks-maybe))
+      (println (str "\n" (first bks-maybe)))
+      (reset! a-books (last bks-maybe)))
     (print-status a-books a-borrowers)))
 
 (defn new-empty-a [a-books a-borrowers]
@@ -51,7 +50,7 @@
 (def json-borrowers-file-before "resources/borrowers-before.json")
 (def json-borrowers-file-after "resources/borrowers-after.json")
 (def json-books-file "resources/books-before.json")
-(def json-borrowers-file-bad "resources/bad-borrowers.json")
+(def json-borrowers-file-bad "resources-test/bad-json.json")
 (def empty-file "resources/empty.json")
 
 (defn -main [& _]
@@ -132,7 +131,7 @@
     (println "Then try to make a library using the deleted \"borrowers-after.json\":")
     (new-a a-books a-borrowers json-borrowers-file-after json-books-file)
 
-    (println "And if we read in a file with mal-formed json content... like \"bad-borrowers.json\":")
+    (println "And if we read in a file with mal-formed json content... like \"bad-json.json\":")
     (new-a a-books a-borrowers json-borrowers-file-bad json-books-file)
 
     (println "Or how about reading in an empty file... \"empty.json\":")
