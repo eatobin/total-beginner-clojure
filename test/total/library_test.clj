@@ -1,6 +1,5 @@
 (ns total.library-test
   (:require [clojure.test :refer [deftest is]]
-            [total.domain :as dom]
             [total.borrower :as br]
             [total.book :as bk]
             [total.library :as lib]
@@ -25,7 +24,6 @@
 (def bks4 (list bk2 {:title "Title1", :author "Author1", :maybe-borrower nil}))
 (def bks5 (list bk1 bk2))
 
-(def json-string-borrowers-bad "[{\"name\"\"Borrower1\",\"max-books\":1},{\"name\":\"Borrower2\",\"max-books\":2}]")
 (def json-string-borrowers "[{\"max-books\":2, \"name\":\"Borrower2\"},{\"name\":\"Borrower1\",\"max-books\":1}]")
 (def json-string-books "[{\"title\":\"Title1\",\"author\":\"Author1\",\"maybe-borrower\":{\"name\":\"Borrower1\",\"max-books\":1}},{\"title\":\"Title2\",\"author\":\"Author2\",\"maybe-borrower\":null}]")
 
@@ -196,28 +194,29 @@
            (let [maybe-s (tot/read-file-into-json-string "resources-test/bad-json.json")]
              (lib/json-string-to-list maybe-s)))
 
-;
-;(deftest json-parse-pass-brs-test
-;  (is (= brs1
-;         (lib/json-string-to-list json-string-borrowers dom/br-fields))))
-;(s/conform (s/or :is-json-brs :unq/brs
-;                 :is-json-bks :unq/bks
-;                 :is-error string?)
-;           (lib/json-string-to-list json-string-borrowers dom/br-fields))
-;
-;(deftest json-parse-pass-bks-test
-;  (is (= bks1
-;         (lib/json-string-to-list json-string-books dom/bk-fields))))
-;(s/conform (s/or :is-json-brs :unq/brs
-;                 :is-json-bks :unq/bks
-;                 :is-error string?)
-;           (lib/json-string-to-list json-string-books dom/bk-fields))
-;
-;(deftest collection-to-json-string-test
-;  (is (= json-string-books
-;         (lib/collection-to-json-string bks5))))
-;(s/conform string?
-;           (lib/collection-to-json-string bks5))
+(deftest json-parse-pass-brs-test
+  (let [maybe-s (lib/json-string-to-list [nil json-string-borrowers])]
+    (is (= [nil brs1]
+           maybe-s))))
+(s/conform (s/or :is-json-brs (s/tuple nil? :unq/brs)
+                 :is-json-bks (s/tuple nil? :unq/bks)
+                 :is-error (s/tuple string? nil?))
+           (lib/json-string-to-list [nil json-string-borrowers]))
+
+(deftest json-parse-pass-bks-test
+  (let [maybe-s (lib/json-string-to-list [nil json-string-books])]
+    (is (= [nil bks1]
+           maybe-s))))
+(s/conform (s/or :is-json-brs (s/tuple nil? :unq/brs)
+                 :is-json-bks (s/tuple nil? :unq/bks)
+                 :is-error (s/tuple string? nil?))
+           (lib/json-string-to-list [nil json-string-books]))
+
+(deftest collection-to-json-string-test
+  (is (= json-string-books
+         (lib/collection-to-json-string bks5))))
+(s/conform string?
+           (lib/collection-to-json-string bks5))
 
 (deftest library-to-string-test
   (is (= "Test Library: 2 books; 3 borrowers."
