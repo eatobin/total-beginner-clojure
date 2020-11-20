@@ -163,18 +163,19 @@
 (s/conform :unq/bks
            (lib/check-in "NoTitle" bks1))
 
-;(deftest read-file-pass
-;  (let [maybe-s (tot/read-file-into-json-string "resources/borrowers-before.json")]
-;    (is (= '(#:total.domain{:max-books 200
-;                            :name      "Borrower200"}
-;              #:total.domain{:max-books 100
-;                             :name      "Borrower100"})
-;           (lib/json-string-to-list maybe-s)))))
-;(s/conform (s/or :is-json :unq/brs
-;                 :is-error string?)
-;           (let [s (tot/read-file-into-json-string "resources/borrowers-before.json")]
-;             (lib/json-string-to-list s dom/br-fields)))
-;
+(deftest read-file-pass
+  (let [maybe-s (tot/read-file-into-json-string "resources/borrowers-before.json")]
+    (is (= [nil '({:max-books 200
+                   :name      "Borrower200"}
+                  {:max-books 100
+                   :name      "Borrower100"})]
+           (lib/json-string-to-list maybe-s)))))
+(s/conform (s/or :is-json-brs (s/tuple nil? :unq/brs)
+                 :is-json-bks (s/tuple nil? :unq/bks)
+                 :is-error (s/tuple string? nil?))
+           (let [maybe-s (tot/read-file-into-json-string "resources/borrowers-before.json")]
+             (lib/json-string-to-list maybe-s)))
+
 ;(deftest read-file-fail
 ;  (let [s (tot/read-file-into-json-string "no-file.json")]
 ;    (is (= "File read error"

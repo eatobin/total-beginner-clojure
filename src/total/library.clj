@@ -107,7 +107,6 @@
         :args (s/cat :title ::dom/title :books :unq/bks)
         :ret :unq/bks)
 
-
 (defn json-string-to-list [[error-string json-string]]
   (if (nil? error-string)
     (try
@@ -122,9 +121,6 @@
         :ret (s/or :is-json-brs (s/tuple nil? :unq/brs)
                    :is-json-bks (s/tuple nil? :unq/bks)
                    :is-error (s/tuple string? nil?)))
-
-
-
 
 (defn collection-to-json-string [collection]
   (json/write-str collection))
