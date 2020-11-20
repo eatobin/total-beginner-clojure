@@ -176,15 +176,16 @@
            (let [maybe-s (tot/read-file-into-json-string "resources/borrowers-before.json")]
              (lib/json-string-to-list maybe-s)))
 
-;(deftest read-file-fail
-;  (let [s (tot/read-file-into-json-string "no-file.json")]
-;    (is (= "File read error"
-;           (lib/json-string-to-list s dom/br-fields)))))
-;(s/conform (s/or :is-json :unq/brs
-;                 :is-error string?)
-;           (let [s (tot/read-file-into-json-string "no-file.json")]
-;             (lib/json-string-to-list s dom/br-fields)))
-;
+(deftest read-file-fail
+  (let [maybe-s (tot/read-file-into-json-string "no-file.json")]
+    (is (= ["no-file.json (No such file or directory)" nil]
+           (lib/json-string-to-list maybe-s)))))
+(s/conform (s/or :is-json-brs (s/tuple nil? :unq/brs)
+                 :is-json-bks (s/tuple nil? :unq/bks)
+                 :is-error (s/tuple string? nil?))
+           (let [maybe-s (tot/read-file-into-json-string "no-file.json")]
+             (lib/json-string-to-list maybe-s)))
+
 ;(deftest json-parse-fail-test
 ;  (is (= "JSON parse error"
 ;         (lib/json-string-to-list json-string-borrowers-bad dom/br-fields))))
