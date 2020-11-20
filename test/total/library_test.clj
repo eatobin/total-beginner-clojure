@@ -186,9 +186,9 @@
            (let [maybe-s (tot/read-file-into-json-string "no-file.json")]
              (lib/json-string-to-list maybe-s)))
 
-;(deftest json-parse-fail-test
-;  (is (= "JSON parse error"
-;         (lib/json-string-to-list json-string-borrowers-bad dom/br-fields))))
+(deftest json-parse-fail-test
+  (is (= "JSON parse error"
+         (lib/json-string-to-list [nil json-string-borrowers-bad]))))
 ;(s/conform (s/or :is-json-brs :unq/brs
 ;                 :is-json-bks :unq/bks
 ;                 :is-error string?)
