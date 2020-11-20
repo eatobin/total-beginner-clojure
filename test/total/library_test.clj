@@ -187,12 +187,15 @@
              (lib/json-string-to-list maybe-s)))
 
 (deftest json-parse-fail-test
-  (is (= "JSON parse error"
-         (lib/json-string-to-list [nil json-string-borrowers-bad]))))
-;(s/conform (s/or :is-json-brs :unq/brs
-;                 :is-json-bks :unq/bks
-;                 :is-error string?)
-;           (lib/json-string-to-list json-string-borrowers-bad dom/br-fields))
+  (let [maybe-s (tot/read-file-into-json-string "resources-test/bad-json.json")]
+    (is (= ["JSON error (unexpected character): :" nil]
+           (lib/json-string-to-list maybe-s)))))
+(s/conform (s/or :is-json-brs (s/tuple nil? :unq/brs)
+                 :is-json-bks (s/tuple nil? :unq/bks)
+                 :is-error (s/tuple string? nil?))
+           (let [maybe-s (tot/read-file-into-json-string "resources-test/bad-json.json")]
+             (lib/json-string-to-list maybe-s)))
+
 ;
 ;(deftest json-parse-pass-brs-test
 ;  (is (= brs1
