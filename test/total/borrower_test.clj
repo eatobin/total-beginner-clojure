@@ -38,3 +38,9 @@
          (br/to-string br1))))
 (s/conform string?
            (br/to-string br1))
+
+(deftest borrower-to-json-string
+  (is (= json-string-br
+         (br/borrower-to-json-string br1))))
+(s/conform string?
+           (br/borrower-to-json-string br1))

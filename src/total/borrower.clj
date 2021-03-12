@@ -42,6 +42,12 @@
     (= key "maxBooks") :max-books
     :else (keyword key)))
 
+(defn- my-key-writer
+  [key]
+  (cond
+    (= key :max-books) "maxBooks"
+    :else (name key)))
+
 (defn borrower-json-string-to-borrower [borrower-string]
   (json/read-str borrower-string
                  :key-fn my-key-reader))
@@ -49,25 +55,11 @@
         :args (s/cat :borrower-string string?)
         :ret :unq/borrower)
 
-;def borrowerJsonStringToBorrower (borrowerString: String) : Either [Error, Borrower] =
-;decode [Borrower] (borrowerString)
-;
-;def borrowerToJsonString (br: Borrower) : JsonString =
-;br.asJson.noSpaces
-;
-;(defn- my-value-reader
-;  [key value]
-;  (if (or (= key :givee)
-;          (= key :giver))
-;    (keyword value)
-;    value))
-;
-;(defn gift-pair-json-string-to-Gift-Pair [gp-string]
-;  (json/read-str gp-string
-;                 :value-fn my-value-reader
-;                 :key-fn keyword))
-;(s/fdef gift-pair-json-string-to-Gift-Pair
-;        :args (s/cat :gp-string string?)
-;        :ret :unq/gift-pair)
+(defn borrower-to-json-string [borrower]
+  (json/write-str borrower
+                  :key-fn my-key-writer))
+(s/fdef borrower-to-json-string
+        :args (s/cat :borrower :unq/borrower)
+        :ret string?)
 
 (ostest/instrument)
