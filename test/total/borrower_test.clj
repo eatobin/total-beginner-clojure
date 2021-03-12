@@ -21,20 +21,20 @@
 (s/conform ::dom/max-books
            (br/get-max-books br1))
 
-;(deftest set-name-test
-;  (is (= {:name "Jack", :max-books 1}
-;         (br/set-name br1 "Jack"))))
-;(s/conform :unq/borrower
-;           (br/set-name br1 "Jack"))
-;
-;(deftest set-max-books-test
-;  (is (= {:name "Borrower1", :max-books 11}
-;         (br/set-max-books br1 11))))
-;(s/conform :unq/borrower
-;           (br/set-max-books br1 11))
-;
-;(deftest borrower-to-string-test
-;  (is (= "Borrower1 (1 books)"
-;         (br/to-string br1))))
-;(s/conform string?
-;           (br/to-string br1))
+(deftest set-name-test
+  (is (= {:name "Jack", :max-books 1}
+         (br/set-name br1 "Jack"))))
+(s/conform :unq/borrower
+           (br/set-name br1 "Jack"))
+
+(deftest set-max-books-test
+  (is (= {:name "Borrower1", :max-books 11}
+         (br/set-max-books br1 11))))
+(s/conform :unq/borrower
+           (br/set-max-books br1 11))
+
+(deftest to-string-test
+  (is (= "Borrower1 (1 books)"
+         (br/to-string br1))))
+(s/conform string?
+           (br/to-string br1))
