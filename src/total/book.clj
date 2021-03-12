@@ -58,12 +58,14 @@
 (defn- my-key-reader
   [key]
   (cond
+    (= key "maxBooks") :max-books
     (= key "borrower") :maybe-borrower
     :else (keyword key)))
 
 (defn- my-key-writer
   [key]
   (cond
+    (= key :max-books) "maxBooks"
     (= key :maybe-borrower) "borrower"
     :else (name key)))
 
