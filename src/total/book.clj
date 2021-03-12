@@ -5,11 +5,11 @@
             [clojure.spec.alpha :as s]
             [orchestra.spec.test :as ostest]))
 
-;(defn get-title [book]
-;  (:title book))
-;(s/def get-title
-;  ::dom/extract-fn-bk-title)
-;
+(defn get-title [book]
+  (:title book))
+(s/def get-title
+  ::dom/extract-fn-bk-title)
+
 ;(defn get-author [book]
 ;  (:author book))
 ;(s/fdef get-author
