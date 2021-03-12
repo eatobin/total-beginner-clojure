@@ -1,15 +1,16 @@
-;(ns total.borrower-test
-;  (:require [clojure.test :refer [deftest is]]
-;            [total.domain :as dom]
-;            [total.borrower :as br]
-;            [clojure.spec.alpha :as s]))
-;
+(ns total.borrower-test
+  (:require [clojure.test :refer [deftest is]]
+            [total.domain :as dom]
+            [total.borrower :as br]
+            [clojure.spec.alpha :as s]))
+
 ;;(def br1 (br/make-borrower "Borrower1" 1))
 ;;(s/conform :unq/borrower
 ;;           (br/make-borrower "Borrower1" 1))
 ;
-;private val jsonStringBr: String = "{\"name\":\"Borrower1\",\"maxBooks\":1}"
-;private val br1: Borrower = borrowerJsonStringToBorrower(jsonStringBr).getOrElse(Borrower("", 0))
+(def json-string-br "{\"name\":\"Borrower1\",\"maxBooks\":1}")
+(def br1 (br/borrower-json-string-to-borrower json-string-br))
+(println br1)
 ;
 ;
 ;(deftest get-name-test
