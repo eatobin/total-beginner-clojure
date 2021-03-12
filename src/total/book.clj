@@ -1,18 +1,10 @@
-;(ns total.book
-;  (:require [total.domain :as dom]
-;            [total.borrower :as br]
-;            [clojure.spec.alpha :as s]
-;            [orchestra.spec.test :as ostest]))
-;
-;(defn make-book
-;  ([title author] (make-book title author nil))
-;  ([title author m-borrower] {:title title, :author author, :maybe-borrower m-borrower}))
-;(s/fdef make-book
-;        :args (s/cat :title ::dom/title
-;                     :author ::dom/author
-;                     :borrower (s/? ::dom/maybe-borrower))
-;        :ret :unq/book)
-;
+(ns total.book
+  (:require [total.domain :as dom]
+            [total.borrower :as br]
+            [clojure.data.json :as json]
+            [clojure.spec.alpha :as s]
+            [orchestra.spec.test :as ostest]))
+
 ;(defn get-title [book]
 ;  (:title book))
 ;(s/def get-title
@@ -63,5 +55,23 @@
 ;
 ;def bookToJsonString(bk: Book): JsonString =
 ;bk.asJson.noSpaces
-;
-;(ostest/instrument)
+(defn- my-key-reader
+  [key]
+  (cond
+    (= key "borrower") :maybe-borrower
+    :else (keyword key)))
+
+(defn- my-key-writer
+  [key]
+  (cond
+    (= key :maybe-borrower) "borrower"
+    :else (name key)))
+
+(defn book-json-string-to-book [book-string]
+  (json/read-str book-string
+                 :key-fn my-key-reader))
+(s/fdef book-json-string-to-book
+        :args (s/cat :book-string string?)
+        :ret :unq/book)
+
+(ostest/instrument)
