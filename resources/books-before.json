@@ -2,14 +2,14 @@
   {
     "title": "Book100",
     "author": "Author100",
-    "maybe-borrower": {
+    "borrower": {
       "name": "Borrower100",
-      "max-books": 100
+      "maxBooks": 100
     }
   },
   {
     "title": "Book200",
     "author": "Author200",
-    "maybe-borrower": null
+    "borrower": null
   }
 ]

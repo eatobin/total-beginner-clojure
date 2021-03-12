@@ -1,15 +1,9 @@
 (ns total.borrower
   (:require
     [total.domain :as dom]
+    [clojure.data.json :as json]
     [clojure.spec.alpha :as s]
     [orchestra.spec.test :as ostest]))
-
-(defn make-borrower [name max-books]
-  {:name name, :max-books max-books})
-(s/fdef make-borrower
-        :args (s/cat :name :total.domain/name
-                     :max-books :total.domain/max-books)
-        :ret :unq/borrower)
 
 (defn get-name [borrower]
   (:name borrower))
@@ -36,10 +30,16 @@
                      :max-books ::dom/max-books)
         :ret :unq/borrower)
 
-(defn borrower-to-string [borrower]
+(defn to-string [borrower]
   (str (get-name borrower) " (" (get-max-books borrower) " books)"))
-(s/fdef borrower-to-string
+(s/fdef to-string
         :args (s/cat :borrower :unq/borrower)
         :ret string?)
+
+def borrowerJsonStringToBorrower(borrowerString: String): Either[Error, Borrower] =
+decode[Borrower](borrowerString)
+
+def borrowerToJsonString(br: Borrower): JsonString =
+br.asJson.noSpaces
 
 (ostest/instrument)

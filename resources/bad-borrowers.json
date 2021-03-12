@@ -1,0 +1,12 @@
+[
+  {
+    "name"
+    ;
+    "Borrower1000",
+    "maxBooks": 1000
+  },
+  {
+    "name": "Borrower2000",
+    "maxBooks": 2000
+  }
+]
