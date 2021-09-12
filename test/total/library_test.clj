@@ -1,11 +1,11 @@
 (ns total.library-test
   (:require
-            [clojure.spec.alpha :as s]
-            [clojure.test :refer [deftest is]]
-            [total.book :as bk]
-            [total.borrower :as br]
-            [total.library :as lib]
-            [total.total :as tot]))
+    [clojure.spec.alpha :as s]
+    [clojure.test :refer [deftest is]]
+    [total.book :as bk]
+    [total.borrower :as br]
+    [total.library :as lib]
+    [total.total :as tot]))
 
 (def br1 {:name "Borrower1" :max-books 1})
 (def br2 {:name "Borrower2" :max-books 2})
@@ -187,7 +187,7 @@
 
 (deftest json-parse-fail-test
   (let [maybe-s (tot/read-file-into-json-string "resources-test/bad-json.json")]
-    (is (= ["JSON error (unexpected character): :" nil]
+    (is (= ["JSON error (invalid array)" nil]
            (lib/json-string-to-list maybe-s)))))
 (s/conform (s/or :is-json-brs (s/tuple nil? :unq/brs)
                  :is-json-bks (s/tuple nil? :unq/bks)
