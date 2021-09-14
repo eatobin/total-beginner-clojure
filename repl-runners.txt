@@ -11,3 +11,5 @@ clj -M:inspect/reveal-nrepl:eat/orchestra:eat/test
 clj -A:eat/reveal -M -m vlaaad.reveal repl
 
 :inspect/reveal - IntelliJ REPL alias
+
+clojure -M:test/kaocha:eat/orchestra:eat/test
