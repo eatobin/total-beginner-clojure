@@ -1,11 +1,11 @@
 (ns total.library
   (:require
-            [clojure.data.json :as json]
-            [clojure.spec.alpha :as s]
-            [orchestra.spec.test :as ostest]
-            [total.book :as bk]
-            [total.borrower :as br]
-            [total.domain :as dom]))
+    [clojure.data.json :as json]
+    [clojure.spec.alpha :as s]
+    [orchestra.spec.test :as ostest]
+    [total.book :as bk]
+    [total.borrower :as br]
+    [total.domain :as dom]))
 
 (defn add-item [x xs]
   (if (some #{x} xs)
