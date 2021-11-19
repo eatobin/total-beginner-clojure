@@ -1,3 +1,5 @@
 clojure -X:eat/new :template app :name total/total
 
 clojure -M:eat/orchestra:eat/test -m total.total
+
+remember to remove the pom.xml file!
