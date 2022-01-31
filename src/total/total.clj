@@ -1,3 +1,4 @@
+;; [eric@linux-epth total-beginner-clojure](master)$ clojure -M:eat/orchestra:eat/test -m total.total
 (ns total.total
   (:require [total.library :as lib]
             [clojure.java.io :as io]
