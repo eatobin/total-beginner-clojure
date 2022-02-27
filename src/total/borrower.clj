@@ -3,19 +3,32 @@
     [total.domain :as dom]
     [clojure.data.json :as json]
     [clojure.spec.alpha :as s]
-    [orchestra.spec.test :as ostest]))
+    [orchestra.spec.test :as ostest]
+    [malli.core :as m]
+    [malli.instrument :as mi]))
 
-(defn get-name [borrower]
+(def =>bn [:string {:min 1}])
+(def =>mb [:and :int [:> 0]])
+(def =>br [:map {:closed true} [:name =>bn] [:max-books =>mb]])
+
+(def =>get-name [:=> [:cat =>br] =>bn])
+(def =>set-name [:=> [:cat =>br =>bn] =>br])
+
+(defn get-name
+  "get the name of a borrower"
+  {:malli/schema =>get-name}
+  [borrower]
   (:name borrower))
-(s/def get-name
-  ::dom/extract-fn-br-name)
 
-(defn set-name [borrower name]
+(defn set-name
+  "set the name of a borrower"
+  {:malli/schema =>set-name}
+  [borrower name]
   (assoc borrower :name name))
-(s/fdef set-name
-        :args (s/cat :borrower :unq/borrower
-                     :name ::dom/name)
-        :ret :unq/borrower)
+;(s/fdef set-name
+;        :args (s/cat :borrower :unq/borrower
+;                     :name ::dom/name)
+;        :ret :unq/borrower)
 
 (defn get-max-books [borrower]
   (:max-books borrower))
@@ -63,3 +76,5 @@
         :ret string?)
 
 (ostest/instrument)
+(mi/collect!)
+(mi/instrument!)
