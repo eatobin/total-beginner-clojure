@@ -14,6 +14,8 @@
 (def =>to-string [:=> [:cat =>br] :string])
 (def =>borrower-json-string-to-borrower [:=> [:cat :string] =>br])
 (def =>borrower-to-json-string [:=> [:cat =>br] :string])
+(def =>my-key-reader [:=> [:cat [:string {:min 1}]] :keyword])
+(def =>my-key-writer [:=> [:cat :keyword] :string])
 
 (defn get-name
   "get the name of a borrower"
@@ -45,17 +47,21 @@
   [borrower]
   (str (get-name borrower) " (" (get-max-books borrower) " books)"))
 
-(defn- my-key-reader
-  [key]
+(defn my-key-reader
+  "string -> keyword"
+  {:malli/schema =>my-key-reader}
+  [string-key]
   (cond
-    (= key "maxBooks") :max-books
-    :else (keyword key)))
+    (= string-key "maxBooks") :max-books
+    :else (keyword string-key)))
 
-(defn- my-key-writer
-  [key]
+(defn my-key-writer
+  "keyword -> string"
+  {:malli/schema =>my-key-writer}
+  [keyword-key]
   (cond
-    (= key :max-books) "maxBooks"
-    :else (name key)))
+    (= keyword-key :max-books) "maxBooks"
+    :else (name keyword-key)))
 
 (defn borrower-json-string-to-borrower
   "create a borrower from a JSON string"
