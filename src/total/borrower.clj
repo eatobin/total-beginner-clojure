@@ -47,7 +47,7 @@
   [borrower]
   (str (get-name borrower) " (" (get-max-books borrower) " books)"))
 
-(defn my-key-reader
+(defn- my-key-reader
   "string -> keyword"
   {:malli/schema =>my-key-reader}
   [string-key]
@@ -55,7 +55,7 @@
     (= string-key "maxBooks") :max-books
     :else (keyword string-key)))
 
-(defn my-key-writer
+(defn- my-key-writer
   "keyword -> string"
   {:malli/schema =>my-key-writer}
   [keyword-key]
