@@ -2,24 +2,25 @@
   (:require [clojure.test :refer [deftest is]]
             [total.domain :as dom]
             [total.borrower :as br]
-            [clojure.spec.alpha :as s]))
+            [clojure.spec.alpha :as s]
+            [malli.core :as m]
+            [malli.generator :as mg]))
 
 (def json-string-br "{\"name\":\"Borrower1\",\"maxBooks\":1}")
 (def br1 (br/borrower-json-string-to-borrower json-string-br))
-(s/conform :unq/borrower
-           br1)
+(m/validate br/=>br br1)
 
-(s/valid? ::dom/extract-fn-br-name
-          br/get-name)
-
-(s/valid? ::dom/extract-fn-bk-title
-          br/get-name)
-
+(def =>get-name
+  (m/schema
+    br/=>get-name
+    {::m/function-checker mg/function-checker}))
+(m/validate =>get-name
+            br/get-name)
 (deftest get-name-test
   (is (= "Borrower1"
          (br/get-name br1))))
-(s/conform ::dom/name
-           (br/get-name br1))
+(m/validate br/=>bn
+            (br/get-name br1))
 
 (deftest get-max-books-test
   (is (= 1
