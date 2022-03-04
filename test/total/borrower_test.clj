@@ -1,7 +1,6 @@
 (ns total.borrower-test
   (:require [clojure.test :refer [deftest is]]
             [total.borrower :as br]
-            [clojure.spec.alpha :as s]
             [malli.core :as m]
             [malli.generator :as mg]))
 
@@ -37,17 +36,17 @@
 (deftest set-max-books-test
   (is (= {:name "Borrower1", :max-books 11}
          (br/set-max-books br1 11))))
-(s/conform :unq/borrower
-           (br/set-max-books br1 11))
+(m/validate br/=>br
+            (br/set-max-books br1 11))
 
 (deftest to-string-test
   (is (= "Borrower1 (1 books)"
          (br/to-string br1))))
-(s/conform string?
-           (br/to-string br1))
+(m/validate :string
+            (br/to-string br1))
 
 (deftest borrower-to-json-string
   (is (= json-string-br
          (br/borrower-to-json-string br1))))
-(s/conform string?
-           (br/borrower-to-json-string br1))
+(m/validate :string
+            (br/borrower-to-json-string br1))
