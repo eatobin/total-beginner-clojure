@@ -3,12 +3,19 @@
             [total.borrower :as br]
             [clojure.data.json :as json]
             [clojure.spec.alpha :as s]
-            [orchestra.spec.test :as ostest]))
+            [orchestra.spec.test :as ostest]
+            [malli.instrument :as mi]))
 
-(defn get-title [book]
+(def =>title [:string {:min 1}])
+(def =>author [:string {:min 1}])
+(def =>maybe-borrower [:maybe br/=>borrower])
+(def =>book [:map {:closed true} [:title =>title] [:author =>author] [:maybe-borrower =>maybe-borrower]])
+
+(defn get-title
+  "get the title of a book"
+  {:malli/schema [:=> [:cat =>book] =>title]}
+  [book]
   (:title book))
-(s/def get-title
-  ::dom/extract-fn-bk-title)
 
 (defn get-author [book]
   (:author book))
@@ -80,3 +87,5 @@
         :ret string?)
 
 (ostest/instrument)
+(mi/collect!)
+(mi/instrument!)
