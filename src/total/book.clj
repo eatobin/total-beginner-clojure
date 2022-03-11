@@ -1,9 +1,6 @@
 (ns total.book
-  (:require [total.domain :as dom]
-            [total.borrower :as br]
+  (:require [total.borrower :as br]
             [clojure.data.json :as json]
-            [clojure.spec.alpha :as s]
-            [orchestra.spec.test :as ostest]
             [malli.instrument :as mi]))
 
 (def =>title [:string {:min 1}])
@@ -75,20 +72,19 @@
     (= keyword-key :maybe-borrower) "borrower"
     :else (name keyword-key)))
 
-(defn book-json-string-to-book [book-string]
+(defn book-json-string-to-book
+  "create a book from a JSON string"
+  {:malli/schema [:=> [:cat :string] =>book]}
+  [book-string]
   (json/read-str book-string
                  :key-fn my-key-reader))
-(s/fdef book-json-string-to-book
-        :args (s/cat :book-string string?)
-        :ret :unq/book)
 
-(defn book-to-json-string [book]
+(defn book-to-json-string
+  "create a JSON string from a book"
+  {:malli/schema [:=> [:cat =>book] :string]}
+  [book]
   (json/write-str book
                   :key-fn my-key-writer))
-(s/fdef book-to-json-string
-        :args (s/cat :book :unq/book)
-        :ret string?)
 
-(ostest/instrument)
 (mi/collect!)
 (mi/instrument!)
