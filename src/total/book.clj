@@ -17,60 +17,63 @@
   [book]
   (:title book))
 
-(defn get-author [book]
+(defn get-author
+  "get the author of a book"
+  {:malli/schema [:=> [:cat =>book] =>author]}
+  [book]
   (:author book))
-(s/fdef get-author
-        :args (s/cat :book :unq/book)
-        :ret ::dom/author)
 
-(defn get-borrower [book]
+(defn get-borrower
+  "get the maybe borrower of a book"
+  {:malli/schema [:=> [:cat =>book] =>maybe-borrower]}
+  [book]
   (:maybe-borrower book))
-(s/fdef get-borrower
-        :args (s/cat :book :unq/book)
-        :ret ::dom/maybe-borrower)
 
-(defn set-borrower [book borrower]
+(defn set-borrower
+  "set a borrower"
+  {:malli/schema [:=> [:cat =>book =>maybe-borrower] =>book]}
+  [book borrower]
   (assoc book :maybe-borrower borrower))
-(s/fdef set-borrower
-        :args (s/cat :book :unq/book
-                     :borrower ::dom/maybe-borrower)
-        :ret :unq/book)
 
-(defn- available-string [book]
+(defn- available-string
+  "helper string if available"
+  {:malli/schema [:=> [:cat =>book] :string]}
+  [book]
   (let [borrower (get-borrower book)]
     (if (nil? borrower)
       "Available"
       (str
         "Checked out to "
         (br/get-name borrower)))))
-(s/fdef available-string
-        :args (s/cat :book :unq/book)
-        :ret string?)
 
-(defn to-string [book]
+(defn to-string
+  "book to string"
+  {:malli/schema [:=> [:cat =>book] :string]}
+  [book]
   (str
     (get-title book)
     " by "
     (get-author book)
     "; "
     (available-string book)))
-(s/fdef to-string
-        :args (s/cat :book :unq/book)
-        :ret string?)
 
 (defn- my-key-reader
-  [key]
+  "string -> keyword"
+  {:malli/schema [:=> [:cat [:string {:min 1}]] :keyword]}
+  [string-key]
   (cond
-    (= key "maxBooks") :max-books
-    (= key "borrower") :maybe-borrower
-    :else (keyword key)))
+    (= string-key "maxBooks") :max-books
+    (= string-key "borrower") :maybe-borrower
+    :else (keyword string-key)))
 
 (defn- my-key-writer
-  [key]
+  "keyword -> string"
+  {:malli/schema [:=> [:cat :keyword] :string]}
+  [keyword-key]
   (cond
-    (= key :max-books) "maxBooks"
-    (= key :maybe-borrower) "borrower"
-    :else (name key)))
+    (= keyword-key :max-books) "maxBooks"
+    (= keyword-key :maybe-borrower) "borrower"
+    :else (name keyword-key)))
 
 (defn book-json-string-to-book [book-string]
   (json/read-str book-string
