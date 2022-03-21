@@ -7,6 +7,8 @@
 (def json-string-br "{\"name\":\"Borrower1\",\"maxBooks\":1}")
 (def br1 (br/borrower-json-string-to-borrower json-string-br))
 (m/validate br/=>borrower br1)
+(m/explain br/=>borrower br1)
+(m/explain br/=>borrower {:name "me" :max-books 0})
 
 (def =>get-name-test
   (m/schema
@@ -14,6 +16,10 @@
     {::m/function-checker mg/function-checker}))
 (m/validate =>get-name-test
             br/get-name)
+(m/validate =>get-name-test
+            br/get-max-books)
+(m/explain =>get-name-test
+           br/get-max-books)
 
 (deftest get-name-test
   (is (= "Borrower1"
