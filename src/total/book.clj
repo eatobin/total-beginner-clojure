@@ -1,16 +1,20 @@
 (ns total.book
   (:require [total.borrower :as br]
             [clojure.data.json :as json]
-            [malli.instrument :as mi]))
+            [malli.dev :as dev]
+            [malli.dev.pretty :as pretty]))
 
 (def =>title [:string {:min 1}])
 (def =>author [:string {:min 1}])
 (def =>maybe-borrower [:maybe br/=>borrower])
 (def =>book [:map {:closed true} [:title =>title] [:author =>author] [:maybe-borrower =>maybe-borrower]])
 
+;; sample usage:
+(def =>get-title [:=> [:cat =>book] =>title])
+
 (defn get-title
   "get the title of a book"
-  {:malli/schema [:=> [:cat =>book] =>title]}
+  {:malli/schema =>get-title}
   [book]
   (:title book))
 
@@ -86,5 +90,4 @@
   (json/write-str book
                   :key-fn my-key-writer))
 
-(mi/collect!)
-(mi/instrument!)
+(dev/start! {:report (pretty/reporter)})

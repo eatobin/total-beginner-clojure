@@ -10,18 +10,26 @@
 
 (def json-string-bk1 "{\"title\":\"Title1\",\"author\":\"Author1\",\"borrower\":null}")
 (def json-string-bk2 "{\"title\":\"Title1\",\"author\":\"Author1\",\"borrower\":{\"name\":\"Borrower2\",\"maxBooks\":2}}")
-(def json-string-bees "{\"title\":\"Title1\",\"bees\":\"Knees\",\"author\":\"Author1\",\"borrower\":null}")
+;(def json-string-bees "{\"title\":\"Title1\",\"bees\":\"Knees\",\"author\":\"Author1\",\"borrower\":null}") //fails -extra field
 ;(def json-string-short "{\"title\":\"Title1\",\"borrower\":null}") //fails spec - no Author
 (def br2 {:name "Borrower2" :max-books 2})
 (m/validate br/=>borrower br2)
 (m/validate bk/=>maybe-borrower br2)
 
 (def bk1 (bk/book-json-string-to-book json-string-bk1))
-;(m/validate bk/=>book bk1)
+(m/validate bk/=>book bk1)
+
 (def bk2 (bk/set-borrower bk1 br2))
 (m/validate bk/=>book bk2)
-(m/validate bk/=>book bk1)
-;(def bk-bees (bk/book-json-string-to-book json-string-bees))
+
+;(def bk-bees (bk/book-json-string-to-book json-string-bees))  //fails -extra field
+
+(def =>get-borrower
+  (m/schema
+    [:=> [:cat bk/=>book] bk/=>maybe-borrower]
+    {::m/function-checker mg/function-checker}))
+(m/validate =>get-borrower
+            bk/get-borrower)
 
 (s/conform (s/cat :title ::dom/title
                   :author ::dom/author
