@@ -1,7 +1,8 @@
 (ns total.borrower
   (:require
     [clojure.data.json :as json]
-    [malli.instrument :as mi]))
+    [malli.dev :as dev]
+    [malli.dev.pretty :as pretty]))
 
 (def =>name [:string {:min 1}])
 (def =>max-books [:and :int [:> 0]])
@@ -70,5 +71,4 @@
   (json/write-str borrower
                   :key-fn my-key-writer))
 
-(mi/collect!)
-(mi/instrument!)
+(dev/start! {:report (pretty/reporter)})

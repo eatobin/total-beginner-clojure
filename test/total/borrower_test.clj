@@ -8,11 +8,11 @@
 (def br1 (br/borrower-json-string-to-borrower json-string-br))
 (m/validate br/=>borrower br1)
 
-(def =>get-name
+(def =>get-name-test
   (m/schema
     [:=> [:cat br/=>borrower] br/=>name]
     {::m/function-checker mg/function-checker}))
-(m/validate =>get-name
+(m/validate =>get-name-test
             br/get-name)
 
 (deftest get-name-test
