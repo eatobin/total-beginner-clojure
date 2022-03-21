@@ -8,7 +8,12 @@
 (def br1 (br/borrower-json-string-to-borrower json-string-br))
 (m/validate br/=>borrower br1)
 (m/explain br/=>borrower br1)
+(m/explain br/=>borrower {:name "" :max-books 3})
 (m/explain br/=>borrower {:name "me" :max-books 0})
+(m/explain br/=>borrower {:name "me" :max-books 50})
+(m/explain br/=>borrower {:name "" :max-books 0})
+(m/explain br/=>borrower {:name "me" :max-books "you"})
+(m/explain br/=>borrower {:name "" :max-books ""})
 
 (def =>get-name-test
   (m/schema
@@ -40,10 +45,10 @@
             (br/set-name br1 "Jack"))
 
 (deftest set-max-books-test
-  (is (= {:name "Borrower1", :max-books 11}
-         (br/set-max-books br1 11))))
+  (is (= {:name "Borrower1", :max-books 10}
+         (br/set-max-books br1 10))))
 (m/validate br/=>borrower
-            (br/set-max-books br1 11))
+            (br/set-max-books br1 10))
 
 (deftest to-string-test
   (is (= "Borrower1 (1 books)"

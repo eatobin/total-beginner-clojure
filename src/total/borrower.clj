@@ -5,7 +5,7 @@
     [malli.dev.pretty :as pretty]))
 
 (def =>name [:string {:min 1}])
-(def =>max-books [:and :int [:> 0]])
+(def =>max-books [:int {:min 1, :max 10}])
 (def =>borrower [:map {:closed true} [:name =>name] [:max-books =>max-books]])
 
 ;; sample usage:
