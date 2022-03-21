@@ -6,6 +6,11 @@
 
 (def json-string-br "{\"name\":\"Borrower1\",\"maxBooks\":1}")
 (def br1 (br/borrower-json-string-to-borrower json-string-br))
+(m/explain br/=>name "")
+(m/explain br/=>name 0)
+(m/explain br/=>max-books 0)
+(m/explain br/=>max-books 80)
+(m/explain br/=>max-books "0")
 (m/validate br/=>borrower br1)
 (m/explain br/=>borrower br1)
 (m/explain br/=>borrower {:name "" :max-books 3})
