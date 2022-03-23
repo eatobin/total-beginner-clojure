@@ -3,20 +3,58 @@
     [clojure.data.json :as json]
     [clojure.spec.alpha :as s]
     [orchestra.spec.test :as ostest]
-    [total.book :as bk]
     [total.borrower :as br]
-    [total.domain :as dom]))
+    [total.book :as bk]
+    [total.domain :as dom]
+    [malli.dev :as dev]
+    [malli.dev.pretty :as pretty]
+    [malli.core :as m]))
 
-(defn add-item [x xs]
-  (if (some #{x} xs)
-    xs
-    (into () (cons x xs))))
-(s/fdef add-item
-        :args (s/or
-                :is-brs (s/cat :x :unq/borrower :xs :unq/brs)
-                :is-bks (s/cat :x :unq/book :xs :unq/bks))
-        :ret (s/or :ret-brs :unq/brs
-                   :ret-bks :unq/bks))
+
+
+(def br1 {:name "Borrower1" :max-books 1})
+(def br2 {:name "Borrower2" :max-books 2})
+(def br3 {:name "Borrower3" :max-books 3})
+
+(def brs1 (list br1 br2))
+
+(def =>brs [:sequential br/=>borrower])
+;(def =>bks [:sequential bk/=>book])
+;(def =>extract-fn-br-name [:=> [:cat br/=>borrower] br/=>name])
+;(def =>extract-fn-bk-title [:=> [:cat bk/=>book] bk/=>title])
+
+
+
+
+(defn my-fn
+  [x] (+ 5 x))
+
+(m/=> my-fn
+      [:or
+       [:=> [:cat :int] :int]
+       [:=> [:cat :double] :double]])
+
+;(defn adder
+;  {:malli/schema [:function
+;                  [:=> [:cat br/=>borrower =>brs] =>brs]
+;                  [:=> [:cat br/=>borrower =>brs] =>brs]]}
+;  [x xs] (into () (cons x xs)))
+
+;(defn add-item
+;  "add a br or bk to list of brs or bks"
+;  ;{:malli/schema [:or
+;  ;                [:=> [:cat br/=>borrower =>brs] =>brs]
+;  ;                [:=> [:cat bk/=>book =>bks] =>bks]]}
+;  [x xs]
+;  (if (some #{x} xs)
+;    xs
+;    (into () (cons x xs))))
+;(s/fdef add-item
+;        :args (s/or
+;                :is-brs (s/cat :x :unq/borrower :xs :unq/brs)
+;                :is-bks (s/cat :x :unq/book :xs :unq/bks))
+;        :ret (s/or :ret-brs :unq/brs
+;                   :ret-bks :unq/bks))
 
 (defn remove-book [book books]
   (into () (filter #(not= book %) books)))
@@ -81,32 +119,32 @@
         :args (s/cat :book :unq/book)
         :ret boolean?)
 
-(defn check-out [name title borrowers books]
-  (let [mbk (find-item title books bk/get-title)
-        mbr (find-item name borrowers br/get-name)]
-    (if (and (not= mbk nil) (not= mbr nil)
-             (not-maxed-out? mbr books) (book-not-out? mbk))
-      (let [new-book (bk/set-borrower mbk mbr)
-            fewer-books (remove-book mbk books)]
-        (add-item new-book fewer-books))
-      books)))
-(s/fdef check-out
-        :args (s/cat :name ::dom/name
-                     :title ::dom/title
-                     :borrowers :unq/brs
-                     :books :unq/bks)
-        :ret :unq/bks)
+;(defn check-out [name title borrowers books]
+;  (let [mbk (find-item title books bk/get-title)
+;        mbr (find-item name borrowers br/get-name)]
+;    (if (and (not= mbk nil) (not= mbr nil)
+;             (not-maxed-out? mbr books) (book-not-out? mbk))
+;      (let [new-book (bk/set-borrower mbk mbr)
+;            fewer-books (remove-book mbk books)]
+;        (add-item new-book fewer-books))
+;      books)))
+;(s/fdef check-out
+;        :args (s/cat :name ::dom/name
+;                     :title ::dom/title
+;                     :borrowers :unq/brs
+;                     :books :unq/bks)
+;        :ret :unq/bks)
 
-(defn check-in [title books]
-  (let [mbk (find-item title books bk/get-title)]
-    (if (and (not= mbk nil) (book-out? mbk))
-      (let [new-book (bk/set-borrower mbk nil)
-            fewer-books (remove-book mbk books)]
-        (add-item new-book fewer-books))
-      books)))
-(s/fdef check-in
-        :args (s/cat :title ::dom/title :books :unq/bks)
-        :ret :unq/bks)
+;(defn check-in [title books]
+;  (let [mbk (find-item title books bk/get-title)]
+;    (if (and (not= mbk nil) (book-out? mbk))
+;      (let [new-book (bk/set-borrower mbk nil)
+;            fewer-books (remove-book mbk books)]
+;        (add-item new-book fewer-books))
+;      books)))
+;(s/fdef check-in
+;        :args (s/cat :title ::dom/title :books :unq/bks)
+;        :ret :unq/bks)
 
 (defn- my-key-reader
   [key]
@@ -168,3 +206,4 @@
         :ret string?)
 
 (ostest/instrument)
+(dev/start! {:report (pretty/reporter)})
