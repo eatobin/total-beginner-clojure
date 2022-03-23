@@ -7,7 +7,8 @@
     [total.book :as bk]
     [total.domain :as dom]
     [malli.dev :as dev]
-    [malli.dev.pretty :as pretty]))
+    [malli.dev.pretty :as pretty]
+    [malli.core :as m]))
 
 
 
@@ -22,9 +23,22 @@
 ;(def =>extract-fn-br-name [:=> [:cat br/=>borrower] br/=>name])
 ;(def =>extract-fn-bk-title [:=> [:cat bk/=>book] bk/=>title])
 
-(defn adder
-  {:malli/schema [:=> [:cat br/=>borrower =>brs] =>brs]}
-  [x xs] (into () (cons x xs)))
+
+
+
+(defn my-fn
+  [x] (+ 5 x))
+
+(m/=> my-fn
+      [:or
+       [:=> [:cat :int] :int]
+       [:=> [:cat :double] :double]])
+
+;(defn adder
+;  {:malli/schema [:function
+;                  [:=> [:cat br/=>borrower =>brs] =>brs]
+;                  [:=> [:cat br/=>borrower =>brs] =>brs]]}
+;  [x xs] (into () (cons x xs)))
 
 ;(defn add-item
 ;  "add a br or bk to list of brs or bks"
