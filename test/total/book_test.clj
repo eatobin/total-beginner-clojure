@@ -1,6 +1,5 @@
 (ns total.book-test
   (:require [clojure.test :refer [deftest is]]
-            [total.domain :as dom]
             [total.book :as bk]
             [clojure.spec.alpha :as s]))
 
@@ -15,42 +14,42 @@
 (def bk2 (bk/set-borrower bk1 br2))
 (def bk-bees (bk/book-json-string-to-book json-string-bees))
 
-(s/conform (s/cat :title ::dom/title
-                  :author ::dom/author
-                  :borrower (s/? ::dom/maybe-borrower))
+(s/conform (s/cat :title ::bk/title
+                  :author ::bk/author
+                  :borrower (s/? ::bk/maybe-borrower))
            ["t" "a"])
 
-(s/conform (s/cat :title ::dom/title
-                  :author ::dom/author
-                  :borrower (s/? ::dom/maybe-borrower))
+(s/conform (s/cat :title ::bk/title
+                  :author ::bk/author
+                  :borrower (s/? ::bk/maybe-borrower))
            ["t" "a" nil])
 
-(s/conform (s/cat :title ::dom/title
-                  :author ::dom/author
-                  :borrower (s/? ::dom/maybe-borrower))
+(s/conform (s/cat :title ::bk/title
+                  :author ::bk/author
+                  :borrower (s/? ::bk/maybe-borrower))
            ["t" "a" br2])
 
 (deftest get-title-test
   (is (= "Title1"
          (bk/get-title bk1))))
-(s/conform ::dom/title
+(s/conform ::bk/title
            (bk/get-title bk1))
 
 (deftest get-author-test
   (is (= "Author1"
          (bk/get-author bk1))))
-(s/conform ::dom/author
+(s/conform ::bk/author
            (bk/get-author bk1))
 
 (deftest get-borrower-nil-test
   (is (nil? (bk/get-borrower bk1))))
-(s/conform ::dom/maybe-borrower
+(s/conform ::bk/maybe-borrower
            (bk/get-borrower bk1))
 
 (deftest get-borrower-someone-test
   (is (= br2
          (bk/get-borrower bk2))))
-(s/conform ::dom/maybe-borrower
+(s/conform ::bk/maybe-borrower
            (bk/get-borrower bk2))
 
 (deftest to-string-nil-test

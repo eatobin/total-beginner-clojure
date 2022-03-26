@@ -1,6 +1,5 @@
 (ns total.borrower-test
   (:require [clojure.test :refer [deftest is]]
-            [total.domain :as dom]
             [total.borrower :as br]
             [clojure.spec.alpha :as s]))
 
@@ -9,22 +8,22 @@
 (s/conform :unq/borrower
            br1)
 
-(s/valid? ::dom/extract-fn-br-name
+(s/valid? ::br/extract-fn-br-name
           br/get-name)
 
-(s/valid? ::dom/extract-fn-bk-title
-          br/get-name)
+;(s/valid? ::dom/extract-fn-bk-title
+;          br/get-name)
 
 (deftest get-name-test
   (is (= "Borrower1"
          (br/get-name br1))))
-(s/conform ::dom/name
+(s/conform ::br/name
            (br/get-name br1))
 
 (deftest get-max-books-test
   (is (= 1
          (br/get-max-books br1))))
-(s/conform ::dom/max-books
+(s/conform ::br/max-books
            (br/get-max-books br1))
 
 (deftest set-name-test
