@@ -11,9 +11,6 @@
 (s/valid? ::br/extract-fn-br-name
           br/get-name)
 
-;(s/valid? ::dom/extract-fn-bk-title
-;          br/get-name)
-
 (deftest get-name-test
   (is (= "Borrower1"
          (br/get-name br1))))

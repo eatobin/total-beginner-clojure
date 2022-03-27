@@ -14,6 +14,21 @@
 (def bk2 (bk/set-borrower bk1 br2))
 (def bk-bees (bk/book-json-string-to-book json-string-bees))
 
+(s/valid? ::bk/maybe-borrower
+          br2)
+
+(s/valid? :unq/book
+          bk1)
+
+(s/valid? :unq/book
+          bk2)
+
+(s/valid? :unq/book
+          bk-bees)
+
+(s/valid? ::bk/extract-fn-bk-title
+          bk/get-title)
+
 (s/conform (s/cat :title ::bk/title
                   :author ::bk/author
                   :borrower (s/? ::bk/maybe-borrower))
