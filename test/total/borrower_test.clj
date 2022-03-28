@@ -30,10 +30,10 @@
            (br/set-name br1 "Jack"))
 
 (deftest set-max-books-test
-  (is (= {:name "Borrower1", :max-books 11}
-         (br/set-max-books br1 11))))
+  (is (= {:name "Borrower1", :max-books 10}
+         (br/set-max-books br1 10))))
 (s/conform :unq/borrower
-           (br/set-max-books br1 11))
+           (br/set-max-books br1 10))
 
 (deftest to-string-test
   (is (= "Borrower1 (1 books)"

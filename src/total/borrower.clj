@@ -5,7 +5,11 @@
     [orchestra.spec.test :as ostest]))
 
 (s/def ::name string?)
-(s/def ::max-books (s/and int? #(>= % 0)))
+(s/def ::max-books
+  (s/with-gen
+    (s/and int?
+           #(<= 1 % 10))
+    #(s/gen int?)))
 (s/def :unq/borrower (s/keys :req-un [::name ::max-books]))
 (s/def ::extract-fn-br-name
   (s/fspec :args (s/cat :borrower :unq/borrower)
