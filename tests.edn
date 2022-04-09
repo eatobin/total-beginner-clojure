@@ -1,1 +1,5 @@
-#kaocha/v1 {}
+#kaocha/v1
+    {:plugins                         [:orchestra
+                                       :preloads]
+     :kaocha.plugin.preloads/ns-names [total.kaocha total.borrower]
+     :color?                          false}
