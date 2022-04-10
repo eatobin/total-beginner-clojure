@@ -1,39 +1,32 @@
 (ns total.book
-  (:require [total.borrower :as br]
+  (:require [total.domain :as dom]
+            [total.borrower :as br]
             [clojure.data.json :as json]
             [clojure.spec.alpha :as s]
             [orchestra.spec.test :as ostest]))
 
-(s/def ::title string?)
-(s/def ::author string?)
-(s/def ::maybe-borrower (s/nilable :unq/borrower))
-(s/def :unq/book (s/keys :req-un [::title ::author ::maybe-borrower]))
-(s/def ::extract-fn-bk-title
-  (s/fspec :args (s/cat :book :unq/book)
-           :ret ::title))
-
 (defn get-title [book]
   (:title book))
 (s/def get-title
-  ::extract-fn-bk-title)
+  ::dom/extract-fn-bk-title)
 
 (defn get-author [book]
   (:author book))
 (s/fdef get-author
         :args (s/cat :book :unq/book)
-        :ret ::author)
+        :ret ::dom/author)
 
 (defn get-borrower [book]
   (:maybe-borrower book))
 (s/fdef get-borrower
         :args (s/cat :book :unq/book)
-        :ret ::maybe-borrower)
+        :ret ::dom/maybe-borrower)
 
 (defn set-borrower [book borrower]
   (assoc book :maybe-borrower borrower))
 (s/fdef set-borrower
         :args (s/cat :book :unq/book
-                     :borrower ::maybe-borrower)
+                     :borrower ::dom/maybe-borrower)
         :ret :unq/book)
 
 (defn- available-string [book]

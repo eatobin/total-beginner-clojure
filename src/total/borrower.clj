@@ -1,39 +1,33 @@
 (ns total.borrower
   (:require
+    [total.domain :as dom]
     [clojure.data.json :as json]
     [clojure.spec.alpha :as s]
     [orchestra.spec.test :as ostest]))
 
-(s/def ::name string?)
-(s/def ::max-books pos-int?)
-(s/def :unq/borrower (s/keys :req-un [::name ::max-books]))
-(s/def ::extract-fn-br-name
-  (s/fspec :args (s/cat :borrower :unq/borrower)
-           :ret ::name))
-
 (defn get-name [borrower]
   (:name borrower))
 (s/def get-name
-  ::extract-fn-br-name)
+  ::dom/extract-fn-br-name)
 
 (defn set-name [borrower name]
   (assoc borrower :name name))
 (s/fdef set-name
         :args (s/cat :borrower :unq/borrower
-                     :name ::name)
+                     :name ::dom/name)
         :ret :unq/borrower)
 
 (defn get-max-books [borrower]
   (:max-books borrower))
 (s/fdef get-max-books
         :args (s/cat :borrower :unq/borrower)
-        :ret ::max-books)
+        :ret ::dom/max-books)
 
 (defn set-max-books [borrower max-books]
   (assoc borrower :max-books max-books))
 (s/fdef set-max-books
         :args (s/cat :borrower :unq/borrower
-                     :max-books ::max-books)
+                     :max-books ::dom/max-books)
         :ret :unq/borrower)
 
 (defn to-string [borrower]

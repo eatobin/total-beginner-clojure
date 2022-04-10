@@ -1,5 +1,6 @@
 (ns total.specs
-  (:require [total.borrower :as br]
+  (:require [total.domain :as dom]
+            [total.borrower :as br]
             [total.book :as bk]
             [total.library :as lib]
             [total.total :as mn]
@@ -73,10 +74,10 @@
 (stest/check `lib/remove-book)
 (s/exercise-fn `lib/find-item)
 (stest/check `lib/find-item)
-(s/valid? ::br/extract-fn-br-name br/get-name)
-(s/explain ::br/extract-fn-br-name br/get-name)
-(s/valid? ::bk/extract-fn-bk-title bk/get-title)
-(s/explain ::bk/extract-fn-bk-title bk/get-title)
+(s/conform ::dom/extract-fn-br-name br/get-name)
+(s/explain ::dom/extract-fn-br-name br/get-name)
+(s/conform ::dom/extract-fn-bk-title bk/get-title)
+(s/explain ::dom/extract-fn-bk-title bk/get-title)
 (stest/check `lib/get-books-for-borrower)
 (s/exercise-fn `lib/get-books-for-borrower)
 (stest/check `lib/num-books-out)

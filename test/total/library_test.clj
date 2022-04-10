@@ -164,10 +164,10 @@
 
 (deftest read-file-pass
   (let [maybe-s (tot/read-file-into-json-string "resources/borrowers-before.json")]
-    (is (= [nil '({:max-books 200
-                   :name      "Borrower200"}
-                  {:max-books 100
-                   :name      "Borrower100"})]
+    (is (= [nil '({:max-books 10
+                   :name      "Borrower10"}
+                  {:max-books 9
+                   :name      "Borrower9"})]
            (lib/json-string-to-list maybe-s)))))
 (s/conform (s/or :is-json-brs (s/tuple nil? :unq/brs)
                  :is-json-bks (s/tuple nil? :unq/bks)

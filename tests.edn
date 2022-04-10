@@ -1,5 +1,5 @@
 #kaocha/v1
     {:plugins                         [:orchestra
                                        :preloads]
-     :kaocha.plugin.preloads/ns-names [total.kaocha total.borrower]
+     :kaocha.plugin.preloads/ns-names [total.domain]
      :color?                          false}

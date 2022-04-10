@@ -4,10 +4,8 @@
     [clojure.spec.alpha :as s]
     [orchestra.spec.test :as ostest]
     [total.book :as bk]
-    [total.borrower :as br]))
-
-(s/def :unq/brs (s/coll-of :unq/borrower :kind list?))
-(s/def :unq/bks (s/coll-of :unq/book :kind list?))
+    [total.borrower :as br]
+    [total.domain :as dom]))
 
 (defn add-item [x xs]
   (if (some #{x} xs)
@@ -44,8 +42,8 @@
 
 (s/fdef find-item
         :args (s/or
-                :is-brs (s/cat :target ::br/name :coll :unq/brs :func ::br/extract-fn-br-name)
-                :is-bks (s/cat :target ::bk/title :coll :unq/bks :func ::bk/extract-fn-bk-title))
+                :is-brs (s/cat :target ::dom/name :coll :unq/brs :func ::dom/extract-fn-br-name)
+                :is-bks (s/cat :target ::dom/title :coll :unq/bks :func ::dom/extract-fn-bk-title))
         :ret (s/or :found-br :unq/borrower
                    :found-bk :unq/book
                    :not-found nil?))
@@ -93,8 +91,8 @@
         (add-item new-book fewer-books))
       books)))
 (s/fdef check-out
-        :args (s/cat :name ::br/name
-                     :title ::bk/title
+        :args (s/cat :name ::dom/name
+                     :title ::dom/title
                      :borrowers :unq/brs
                      :books :unq/bks)
         :ret :unq/bks)
@@ -107,7 +105,7 @@
         (add-item new-book fewer-books))
       books)))
 (s/fdef check-in
-        :args (s/cat :title ::bk/title :books :unq/bks)
+        :args (s/cat :title ::dom/title :books :unq/bks)
         :ret :unq/bks)
 
 (defn- my-key-reader

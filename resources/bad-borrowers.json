@@ -2,11 +2,11 @@
   {
     "name"
     ;
-    "Borrower1000",
-    "maxBooks": 1000
+    "Borrower9",
+    "maxBooks": 9
   },
   {
-    "name": "Borrower2000",
-    "maxBooks": 2000
+    "name": "Borrower10",
+    "maxBooks": 10
   }
 ]
