@@ -59,11 +59,11 @@
            {:title          "T"
             :author         "a"
             :maybe-borrower {:name      "Nn",
-                             :max-books 999}})
+                             :max-books 9}})
 (s/conform :unq/book {:title          "T"
                       :author         "a"
                       :maybe-borrower {:name      "Nn",
-                                       :max-books 333}})
+                                       :max-books 9}})
 (s/conform :unq/book {:title          "T"
                       :author         "a"
                       :maybe-borrower nil})
