@@ -9,11 +9,6 @@
 (s/conform :unq/borrower
            br1)
 
-(defn a-test
-  "this is testing a bunch of stuff"
-  [x]
-  (* x 10))
-
 (s/valid? ::dom/extract-fn-br-name
           br/get-name)
 
