@@ -1,9 +1,9 @@
 (ns total.book
-  (:require [total.domain :as dom]
-            [total.borrower :as br]
-            [clojure.data.json :as json]
+  (:require [clojure.data.json :as json]
             [clojure.spec.alpha :as s]
-            [orchestra.spec.test :as ostest]))
+            [orchestra.spec.test :as ostest]
+            [total.borrower :as br]
+            [total.domain :as dom]))
 
 (defn get-title [book]
   (:title book))
@@ -13,43 +13,43 @@
 (defn get-author [book]
   (:author book))
 (s/fdef get-author
-        :args (s/cat :book :unq/book)
-        :ret ::dom/author)
+  :args (s/cat :book :unq/book)
+  :ret ::dom/author)
 
 (defn get-borrower [book]
   (:maybe-borrower book))
 (s/fdef get-borrower
-        :args (s/cat :book :unq/book)
-        :ret ::dom/maybe-borrower)
+  :args (s/cat :book :unq/book)
+  :ret ::dom/maybe-borrower)
 
 (defn set-borrower [book borrower]
   (assoc book :maybe-borrower borrower))
 (s/fdef set-borrower
-        :args (s/cat :book :unq/book
-                     :borrower ::dom/maybe-borrower)
-        :ret :unq/book)
+  :args (s/cat :book :unq/book
+               :borrower ::dom/maybe-borrower)
+  :ret :unq/book)
 
 (defn- available-string [book]
   (let [borrower (get-borrower book)]
     (if (nil? borrower)
       "Available"
       (str
-        "Checked out to "
-        (br/get-name borrower)))))
+       "Checked out to "
+       (br/get-name borrower)))))
 (s/fdef available-string
-        :args (s/cat :book :unq/book)
-        :ret string?)
+  :args (s/cat :book :unq/book)
+  :ret string?)
 
 (defn to-string [book]
   (str
-    (get-title book)
-    " by "
-    (get-author book)
-    "; "
-    (available-string book)))
+   (get-title book)
+   " by "
+   (get-author book)
+   "; "
+   (available-string book)))
 (s/fdef to-string
-        :args (s/cat :book :unq/book)
-        :ret string?)
+  :args (s/cat :book :unq/book)
+  :ret string?)
 
 (defn- my-key-reader
   [key]
@@ -69,14 +69,14 @@
   (json/read-str book-string
                  :key-fn my-key-reader))
 (s/fdef book-json-string-to-book
-        :args (s/cat :book-string string?)
-        :ret :unq/book)
+  :args (s/cat :book-string string?)
+  :ret :unq/book)
 
 (defn book-to-json-string [book]
   (json/write-str book
                   :key-fn my-key-writer))
 (s/fdef book-to-json-string
-        :args (s/cat :book :unq/book)
-        :ret string?)
+  :args (s/cat :book :unq/book)
+  :ret string?)
 
 (ostest/instrument)

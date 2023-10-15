@@ -1,28 +1,28 @@
 (ns total.library
   (:require
-    [clojure.data.json :as json]
-    [clojure.spec.alpha :as s]
-    [orchestra.spec.test :as ostest]
-    [total.book :as bk]
-    [total.borrower :as br]
-    [total.domain :as dom]))
+   [clojure.data.json :as json]
+   [clojure.spec.alpha :as s]
+   [orchestra.spec.test :as ostest]
+   [total.book :as bk]
+   [total.borrower :as br]
+   [total.domain :as dom]))
 
 (defn add-item [x xs]
   (if (some #{x} xs)
     xs
     (into () (cons x xs))))
 (s/fdef add-item
-        :args (s/or
-                :is-brs (s/cat :x :unq/borrower :xs :unq/brs)
-                :is-bks (s/cat :x :unq/book :xs :unq/bks))
-        :ret (s/or :ret-brs :unq/brs
-                   :ret-bks :unq/bks))
+  :args (s/or
+         :is-brs (s/cat :x :unq/borrower :xs :unq/brs)
+         :is-bks (s/cat :x :unq/book :xs :unq/bks))
+  :ret (s/or :ret-brs :unq/brs
+             :ret-bks :unq/bks))
 
 (defn remove-book [book books]
   (into () (filter #(not= book %) books)))
 (s/fdef remove-book
-        :args (s/cat :book :unq/book :books :unq/bks)
-        :ret :unq/bks)
+  :args (s/cat :book :unq/book :books :unq/bks)
+  :ret :unq/bks)
 
 ;(defn find-item [tgt coll f]
 ;  (let [result (filter (fn [x] (= (f x) tgt)) coll)]
@@ -41,12 +41,12 @@
 
 
 (s/fdef find-item
-        :args (s/or
-                :is-brs (s/cat :target ::dom/name :coll :unq/brs :func ::dom/extract-fn-br-name)
-                :is-bks (s/cat :target ::dom/title :coll :unq/bks :func ::dom/extract-fn-bk-title))
-        :ret (s/or :found-br :unq/borrower
-                   :found-bk :unq/book
-                   :not-found nil?))
+  :args (s/or
+         :is-brs (s/cat :target ::dom/name :coll :unq/brs :func ::dom/extract-fn-br-name)
+         :is-bks (s/cat :target ::dom/title :coll :unq/bks :func ::dom/extract-fn-bk-title))
+  :ret (s/or :found-br :unq/borrower
+             :found-bk :unq/book
+             :not-found nil?))
 
 (defn get-books-for-borrower [borrower books]
   (into () (for [bk books
@@ -54,32 +54,32 @@
                  :when (= cb borrower)]
              bk)))
 (s/fdef get-books-for-borrower
-        :args (s/cat :borrower :unq/borrower :books :unq/bks)
-        :ret :unq/bks)
+  :args (s/cat :borrower :unq/borrower :books :unq/bks)
+  :ret :unq/bks)
 
 (defn- num-books-out [borrower books]
   (count (get-books-for-borrower borrower books)))
 (s/fdef num-books-out
-        :args (s/cat :borrower :unq/borrower :books :unq/bks)
-        :ret int?)
+  :args (s/cat :borrower :unq/borrower :books :unq/bks)
+  :ret int?)
 
 (defn- not-maxed-out? [borrower books]
   (< (num-books-out borrower books) (br/get-max-books borrower)))
 (s/fdef not-maxed-out?
-        :args (s/cat :borrower :unq/borrower :books :unq/bks)
-        :ret boolean?)
+  :args (s/cat :borrower :unq/borrower :books :unq/bks)
+  :ret boolean?)
 
 (defn- book-not-out? [book]
   (nil? (bk/get-borrower book)))
 (s/fdef book-not-out?
-        :args (s/cat :book :unq/book)
-        :ret boolean?)
+  :args (s/cat :book :unq/book)
+  :ret boolean?)
 
 (defn- book-out? [book]
   (not (nil? (bk/get-borrower book))))
 (s/fdef book-out?
-        :args (s/cat :book :unq/book)
-        :ret boolean?)
+  :args (s/cat :book :unq/book)
+  :ret boolean?)
 
 (defn check-out [name title borrowers books]
   (let [mbk (find-item title books bk/get-title)
@@ -91,11 +91,11 @@
         (add-item new-book fewer-books))
       books)))
 (s/fdef check-out
-        :args (s/cat :name ::dom/name
-                     :title ::dom/title
-                     :borrowers :unq/brs
-                     :books :unq/bks)
-        :ret :unq/bks)
+  :args (s/cat :name ::dom/name
+               :title ::dom/title
+               :borrowers :unq/brs
+               :books :unq/bks)
+  :ret :unq/bks)
 
 (defn check-in [title books]
   (let [mbk (find-item title books bk/get-title)]
@@ -105,8 +105,8 @@
         (add-item new-book fewer-books))
       books)))
 (s/fdef check-in
-        :args (s/cat :title ::dom/title :books :unq/bks)
-        :ret :unq/bks)
+  :args (s/cat :title ::dom/title :books :unq/bks)
+  :ret :unq/bks)
 
 (defn- my-key-reader
   [key]
@@ -131,27 +131,27 @@
         [(str (.getMessage e)) nil]))
     [error-string nil]))
 (s/fdef json-string-to-list
-        :args (s/cat :input (s/or :success-in (s/tuple nil? string?)
-                                  :failure-in (s/tuple string? nil?)))
-        :ret (s/or :is-json-brs (s/tuple nil? :unq/brs)
-                   :is-json-bks (s/tuple nil? :unq/bks)
-                   :is-error (s/tuple string? nil?)))
+  :args (s/cat :input (s/or :success-in (s/tuple nil? string?)
+                            :failure-in (s/tuple string? nil?)))
+  :ret (s/or :is-json-brs (s/tuple nil? :unq/brs)
+             :is-json-bks (s/tuple nil? :unq/bks)
+             :is-error (s/tuple string? nil?)))
 
 (defn collection-to-json-string [collection]
   (json/write-str collection
                   :key-fn my-key-writer))
 (s/fdef collection-to-json-string
-        :args (s/or :is-brs (s/cat :collection :unq/brs)
-                    :is-bks (s/cat :collection :unq/bks))
-        :ret string?)
+  :args (s/or :is-brs (s/cat :collection :unq/brs)
+              :is-bks (s/cat :collection :unq/bks))
+  :ret string?)
 
 (defn library-to-string [books borrowers]
   (str "Test Library: "
        (count books) " books; "
        (count borrowers) " borrowers."))
 (s/fdef library-to-string
-        :args (s/cat :books :unq/bks :borrowers :unq/brs)
-        :ret string?)
+  :args (s/cat :books :unq/bks :borrowers :unq/brs)
+  :ret string?)
 
 (defn status-to-string [books borrowers]
   (str "\n"
@@ -164,7 +164,7 @@
        "--- End of Status Report ---"
        "\n"))
 (s/fdef status-to-string
-        :args (s/cat :books :unq/bks :borrowers :unq/brs)
-        :ret string?)
+  :args (s/cat :books :unq/bks :borrowers :unq/brs)
+  :ret string?)
 
 (ostest/instrument)

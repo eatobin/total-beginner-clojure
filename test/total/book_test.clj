@@ -1,8 +1,8 @@
 (ns total.book-test
-  (:require [clojure.test :refer [deftest is]]
-            [total.domain :as dom]
+  (:require [clojure.spec.alpha :as s]
+            [clojure.test :refer [deftest is]]
             [total.book :as bk]
-            [clojure.spec.alpha :as s]))
+            [total.domain :as dom]))
 
 
 (def json-string-bk1 "{\"title\":\"Title1\",\"author\":\"Author1\",\"borrower\":null}")
