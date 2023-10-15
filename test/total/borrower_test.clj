@@ -1,8 +1,8 @@
 (ns total.borrower-test
   (:require [clojure.test :refer [deftest is]]
-            [total.borrower :as br]
             [malli.core :as m]
-            [malli.generator :as mg]))
+            [malli.generator :as mg]
+            [total.borrower :as br]))
 
 (def json-string-br "{\"name\":\"Borrower1\",\"maxBooks\":1}")
 (def br1 (br/borrower-json-string-to-borrower json-string-br))
@@ -13,6 +13,7 @@
 (m/explain br/=>max-books "0")
 (m/validate br/=>borrower br1)
 (m/explain br/=>borrower br1)
+(m/explain br/=>borrower br1)
 (m/explain br/=>borrower {:name "" :max-books 3})
 (m/explain br/=>borrower {:name "me" :max-books 0})
 (m/explain br/=>borrower {:name "me" :max-books 50})
@@ -22,8 +23,8 @@
 
 (def =>get-name-test
   (m/schema
-    [:=> [:cat br/=>borrower] br/=>name]
-    {::m/function-checker mg/function-checker}))
+   [:=> [:cat br/=>borrower] br/=>name]
+   {::m/function-checker mg/function-checker}))
 (m/validate =>get-name-test
             br/get-name)
 (m/validate =>get-name-test

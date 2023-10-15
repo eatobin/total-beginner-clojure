@@ -1,2 +1,4 @@
 {:paths ["src" "test" "resources" "resources-test"]
- :deps  {org.clojure/data.json {:mvn/version "2.4.0"}}}
+ :deps  {metosin/malli {:mvn/version "0.13.0"}
+         orchestra/orchestra {:mvn/version "2021.01.01-1"}
+         org.clojure/data.json {:mvn/version "2.4.0"}}}

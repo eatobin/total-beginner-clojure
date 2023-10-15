@@ -1,8 +1,8 @@
 (ns total.book
-  (:require [total.borrower :as br]
-            [clojure.data.json :as json]
+  (:require [clojure.data.json :as json]
             [malli.dev :as dev]
-            [malli.dev.pretty :as pretty]))
+            [malli.dev.pretty :as pretty]
+            [total.borrower :as br]))
 
 (def =>title [:string {:min 1}])
 (def =>author [:string {:min 1}])
@@ -44,19 +44,19 @@
     (if (nil? borrower)
       "Available"
       (str
-        "Checked out to "
-        (br/get-name borrower)))))
+       "Checked out to "
+       (br/get-name borrower)))))
 
 (defn to-string
   "book to string"
   {:malli/schema [:=> [:cat =>book] :string]}
   [book]
   (str
-    (get-title book)
-    " by "
-    (get-author book)
-    "; "
-    (available-string book)))
+   (get-title book)
+   " by "
+   (get-author book)
+   "; "
+   (available-string book)))
 
 (defn- my-key-reader
   "string -> keyword"

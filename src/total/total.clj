@@ -1,9 +1,9 @@
 ;; [eric@linux-epth total-beginner-clojure](master)$ clojure -M:eat/orchestra:eat/test -m total.total
 (ns total.total
-  (:require [total.library :as lib]
-            [clojure.java.io :as io]
+  (:require [clojure.java.io :as io]
             [clojure.spec.alpha :as s]
-            [orchestra.spec.test :as ostest])
+            [orchestra.spec.test :as ostest]
+            [total.library :as lib])
   (:gen-class))
 
 (defn print-status [a-books a-borrowers]
@@ -15,9 +15,9 @@
     (catch Exception e
       [(str (.getMessage e)) nil])))
 (s/fdef read-file-into-json-string
-        :args (s/cat :file-path string?)
-        :ret (s/or :success (s/tuple nil? string?)
-                   :failure (s/tuple string? nil?)))
+  :args (s/cat :file-path string?)
+  :ret (s/or :success (s/tuple nil? string?)
+             :failure (s/tuple string? nil?)))
 (s/conform (s/or :success (s/tuple nil? string?)
                  :failure (s/tuple string? nil?))
            (read-file-into-json-string "resources-test/beatles.json"))

@@ -1,8 +1,8 @@
 (ns total.borrower
   (:require
-    [clojure.data.json :as json]
-    [malli.dev :as dev]
-    [malli.dev.pretty :as pretty]))
+   [clojure.data.json :as json]
+   [malli.dev :as dev]
+   [malli.dev.pretty :as pretty]))
 
 (def =>name [:string {:min 1}])
 (def =>max-books [:int {:min 1, :max 10}])

@@ -1,9 +1,9 @@
 (ns total.book-test
   (:require [clojure.test :refer [deftest is]]
-            [total.borrower :as br]
-            [total.book :as bk]
             [malli.core :as m]
-            [malli.generator :as mg]))
+            [malli.generator :as mg]
+            [total.book :as bk]
+            [total.borrower :as br]))
 
 
 (def json-string-bk1 "{\"title\":\"Title1\",\"author\":\"Author1\",\"borrower\":null}")
@@ -20,8 +20,8 @@
 
 (def =>get-borrower
   (m/schema
-    [:=> [:cat bk/=>book] bk/=>maybe-borrower]
-    {::m/function-checker mg/function-checker}))
+   [:=> [:cat bk/=>book] bk/=>maybe-borrower]
+   {::m/function-checker mg/function-checker}))
 (m/validate =>get-borrower
             bk/get-borrower)
 
