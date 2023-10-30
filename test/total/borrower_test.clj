@@ -1,3 +1,6 @@
+;; clojure -M:project/outdated
+;; clojure -M:test/kaocha-plain
+
 (ns total.borrower-test
   (:require [clojure.test :refer [deftest is]]
             [malli.core :as m]
