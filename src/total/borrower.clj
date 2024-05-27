@@ -1,9 +1,9 @@
 (ns total.borrower
   (:require
-   [clojure.data.json :as json]
-   [clojure.spec.alpha :as s]
-   [orchestra.spec.test :as ostest]
-   [total.domain :as dom]))
+    [clojure.data.json :as json]
+    [clojure.spec.alpha :as s]
+    [orchestra.spec.test :as ostest]
+    [total.domain :as dom]))
 
 (defn get-name [borrower]
   (:name borrower))
@@ -14,7 +14,7 @@
   (assoc borrower :name name))
 (s/fdef set-name
   :args (s/cat :borrower :unq/borrower
-               :name ::dom/name)
+          :name ::dom/name)
   :ret :unq/borrower)
 
 (defn get-max-books [borrower]
@@ -27,7 +27,7 @@
   (assoc borrower :max-books max-books))
 (s/fdef set-max-books
   :args (s/cat :borrower :unq/borrower
-               :max-books ::dom/max-books)
+          :max-books ::dom/max-books)
   :ret :unq/borrower)
 
 (defn to-string [borrower]
@@ -50,14 +50,14 @@
 
 (defn borrower-json-string-to-borrower [borrower-string]
   (json/read-str borrower-string
-                 :key-fn my-key-reader))
+    :key-fn my-key-reader))
 (s/fdef borrower-json-string-to-borrower
   :args (s/cat :borrower-string string?)
   :ret :unq/borrower)
 
 (defn borrower-to-json-string [borrower]
   (json/write-str borrower
-                  :key-fn my-key-writer))
+    :key-fn my-key-writer))
 (s/fdef borrower-to-json-string
   :args (s/cat :borrower :unq/borrower)
   :ret string?)
